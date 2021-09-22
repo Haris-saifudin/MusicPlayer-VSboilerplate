@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "898808355501",
+    "firebase_url": "https://vsboilerplate.firebaseio.com",
+    "project_id": "vsboilerplate",
+    "storage_bucket": "vsboilerplate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898808355501:android:37aed9620cbda2f1560424",
+        "android_client_info": {
+          "package_name": "com.vsboilerplate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898808355501-k0ufchrdtb62s81d2grorbm9fnomgihj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vsboilerplate",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "898808355501-69snavapk5eualuh93hhhgpg3rree9r1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBk9JQBUGKOX8jIin6qWO86ouy__8XtvFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898808355501-69snavapk5eualuh93hhhgpg3rree9r1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "898808355501-61bq6rnjlam13ca70dk9d8pktsianv0l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.VsBoilerPlate"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
