@@ -4,11 +4,11 @@ import {createReducer, createActions} from 'reduxsauce';
 
 const {Types, Creators} = createActions({
   actionRequest: ['data'],
-  // actionSearchRequest: ['search'],
+  actionSearchMusic: ['search'],
   actionSuccess: ['payload'],
   actionFailure: null,
   reset: null,
-  actionPlayMusic: null,
+  actionPlayMusic: ['status'],
   actionSelectMusic: ['params'],
 });
 
@@ -27,6 +27,7 @@ export const INITIAL_STATE = {
   musicList: [],
   playMusic: false,
   onPlayMusic:[],
+  search: undefined,
   massage: {}
 };
 
@@ -38,20 +39,12 @@ export const SampleSelectors = {
   getActiveMusic: (state) => state.sample.playMusic,
   getMusicList: (state) => state.sample.musicList,
   getOnPlayMusic: (state) => state.sample.onPlayMusic,
-  // searchAction: ({action}) => action.action,
+  searchAction: (state) => state.sample.search,
 
 };
 
 /* ------------- Reducers ------------- */
 
-export const actionSearchRequestReducer = (state, {search}) => {
-  console.log('search request');
-  return {
-    ...state.action,
-    fetching: true,
-    data: search
-  };
-};
 
 export const actionRequestReducer = (state, {data}) => {
   return {
@@ -83,10 +76,10 @@ export const actionFailureReducer = (state) => {
   };
 };
 
-export const actionPlayMusicReducer = (state) => {
+export const actionPlayMusicReducer = (state, {status}) => {
   return {
     ...state,
-    playMusic: !state.playMusic
+    playMusic: status
   };
 };
 
@@ -99,7 +92,15 @@ export const actionSelectMusicReducer = (state, {params}) => {
   };
 };
 
-
+export const actionSearchMusicReducer = (state, {search}) => {
+  console.log(search);
+  return {
+    ...state,
+    search,
+    playMusic: false,
+    
+  };
+};
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -108,5 +109,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.ACTION_FAILURE]: actionFailureReducer,
   [Types.ACTION_PLAY_MUSIC]: actionPlayMusicReducer,
   [Types.ACTION_SELECT_MUSIC]: actionSelectMusicReducer,
-  // [Types.ACTION_SEARCH_REQUEST]: actionSearchRequestReducer,
+  [Types.ACTION_SEARCH_MUSIC]: actionSearchMusicReducer,
 });

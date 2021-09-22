@@ -26,15 +26,17 @@ export function SampleReset() {
 }
 
 
-export function* SearchAction(api, {pararms}) {
+export function* SearchAction(api, {search}) {
+  console.log(search);
+
   try {
     (response) => response.json();
-    const response = yield call(api.searchMusic, 'justin');
+    const response = yield call(api.searchMusic, search);
     // if (response.ok) {
     if (true) {
       yield put(SampleActions.actionSuccess({status: 'success', data: response.data.results}));
-      NavigationServices.setRootMain();
-      console.log(response.data)
+      // NavigationServices.setRootMain();
+      // console.log(response.data)
     } else {
       throw response;
     }

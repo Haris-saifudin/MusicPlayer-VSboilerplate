@@ -8,7 +8,7 @@ import Api from '../Services/Api';
 
 /* ------------- Sagas ------------- */
 
-import {SampleAction, SampleReset} from './SampleSagas';
+import {SampleAction, SampleReset, SearchAction} from './SampleSagas';
 import {startup} from './StartupSagas';
 
 /* ------------- API ------------- */
@@ -19,15 +19,13 @@ const api = Api.create();
 
 /* ------------- Connect Types To Sagas ------------- */
   // const play = yield select(SampleSelectors.getActiveMusic);
-
 export default function* root() {
   yield all([
     // some sagas only receive an action
     takeLatest(SampleTypes.ACTION_REQUEST, SampleAction, api),
-    // takeLatest(SampleTypes.ACTION_SEARCH_REQUEST, SampleAction, api. ),
     takeLatest(SampleTypes.RESET, SampleReset),
     takeLatest(StartupTypes.STARTUP, startup),
-    // takeLatest(SampleTypes.ACTION_PLAY_MUSIC, SampleAction, api, ),
+    takeLatest(SampleTypes.ACTION_SEARCH_MUSIC, SearchAction, api),
 
 
     // some sagas receive extra parameters in addition to an action

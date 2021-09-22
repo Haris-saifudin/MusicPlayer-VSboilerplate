@@ -12,19 +12,23 @@ class SearchScreen extends PureComponent {
   
   render() {
     const {payload, playMusic, musicList, onPlayMusic} = this.props;
-    const {music, reset, selectMusic} = this.props;
+    const {music, reset, selectMusic, searchMusic} = this.props;
     
     return (
       <View style={ApplicationStyles.containerSearch}>
-        <View style={ApplicationStyles.topBar}>
-          <TextInput
-            style={ApplicationStyles.textInput}
-            placeholder={"search in apple music"}
+        <View style={ApplicationStyles.container}>
+          <View style={ApplicationStyles.topBar}>
+            <TextInput
+              style={ApplicationStyles.textInput}
+              placeholder={"search in apple music"}
+              onChangeText={(text) => searchMusic(text)}
+              // onFocus={() => music(false)}
 
-          />
-          <TouchableOpacity  activeOpacity={0.8} onPress={() =>console.log(musicList.data)}>
-            <Text style={Font.style.normal}>Cancel</Text>
-          </TouchableOpacity>
+            />
+            <TouchableOpacity  activeOpacity={0.8} onPress={() =>searchMusic('rihana')}>
+              <Text style={Font.style.normal}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         
         {(payload)?
@@ -58,7 +62,7 @@ class SearchScreen extends PureComponent {
             <Text style={ApplicationStyles.trackName}>{onPlayMusic.trackName}</Text>
             <Text style={Font.style.normal, {height: 22}}>{onPlayMusic.artistName} - {onPlayMusic.collectionName}</Text>
           </View>
-          <TouchableOpacity activeOpacity={0.8} onPress={music}>
+          <TouchableOpacity activeOpacity={0.8} onPress={() => music(false)}>
             { (playMusic)?  <Image source={images.play} style={ApplicationStyles.image20} /> :
               <Image source={images.pause} style={ApplicationStyles.image20} />
             }
@@ -90,8 +94,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     reset: () => dispatch(SampleActions.reset()),
-    music: () => dispatch(SampleActions.actionPlayMusic()),
-    selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params))
+    music: (status) => dispatch(SampleActions.actionPlayMusic(status)),
+    selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
+    searchMusic: (search) => dispatch(SampleActions.actionSearchMusic(search)),
+
   };
 };
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import {Navigation} from 'react-native-navigation';
 import {put, select} from 'redux-saga/effects';
-import NavigationServices from '../Navigation/NavigationServices';
+import NavigationServices from '../Navigation/NavigationServices';   
 import {SessionSelectors} from '../Redux/SessionRedux';
 
 /**
@@ -10,8 +10,13 @@ import {SessionSelectors} from '../Redux/SessionRedux';
  * at initial stattup such as get get user information, set token, navigation, etc
  * @param {*} action
  */
+
+//  const session = yield select(SessionSelectors.getSessionStatus);
+
 export function startup(action) {
   const isLogin = false;
+  // console.log('session');
+  // console.log(session);
   if (isLogin) {
     NavigationServices.setRootMain();
   } else {

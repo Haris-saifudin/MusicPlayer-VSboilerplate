@@ -4,8 +4,9 @@ import Font from './Fonts'
 
 const ApplicationStyles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: Colors.white
+    // flex: 1,
+    backgroundColor: Colors.white,
+    justifyContent: 'flex-start',
   },
   containerSearch: {
     flex: 1,
