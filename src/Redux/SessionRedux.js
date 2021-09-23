@@ -24,7 +24,7 @@ export const SessionSelectors = {
 
 /* ------------- Reducers ------------- */
 
-export const changeStatusReducer = (state, {status}) => {
+export const changeSessionStatusReducer = (state, {status}) => {
   console.log('action request');  
   return {
     hasSession: status
@@ -34,6 +34,6 @@ export const changeStatusReducer = (state, {status}) => {
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.CHANGE_SESSION_STATUS]: changeStatusReducer,
+  [Types.CHANGE_SESSION_STATUS]: changeSessionStatusReducer,
  
 });

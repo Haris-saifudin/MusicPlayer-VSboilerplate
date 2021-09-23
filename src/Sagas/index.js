@@ -1,4 +1,4 @@
-import {takeLatest, all} from 'redux-saga/effects';
+import {takeLatest, all, select} from 'redux-saga/effects';
 
 /* ------------- Types ------------- */
 
@@ -19,8 +19,12 @@ import {startup} from './StartupSagas';
 const api = Api.create();
 
 
+
+
 /* ------------- Connect Types To Sagas ------------- */
 export default function* root() {
+  // const status = yield select(SessionSelectors.getSessionStatus);
+  // console.log('sessions :', session);
   yield all([
     // some sagas only receive an action
     takeLatest(SampleTypes.ACTION_REQUEST, SampleAction, api),
@@ -31,3 +35,8 @@ export default function* root() {
     // takeLatest(SampleTypes.SAMPLE_REQUEST, SampleAction)
   ]);
 }
+
+
+// export default function* session() {
+//   const session = yield select(SessionSelectors.getSessionStatus);
+// }

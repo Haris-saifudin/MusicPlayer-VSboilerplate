@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import NavigationServices from '../../Navigation/NavigationServices';
 import {NAVIGATION_NAME} from '../../Navigation/RegisterComponent';
 import SampleActions, {SampleSelectors} from '../../Redux/SampleRedux';
+import SessionActions from '../../Redux/SessionRedux';
 import { Fonts } from '../../Themes';
 import ApplicationStyles from '../../Themes/ApplicationStyles';
 import images from '../../Themes/Images';
@@ -17,7 +18,8 @@ class OnboardScreen extends PureComponent {
   }
 
   navigateToMain() {
-    const {sampleRequst} = this.props;
+    const {sampleRequst, session} = this.props;
+    // session(true);
     sampleRequst();
   }
 
@@ -63,7 +65,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    sampleRequst: () => dispatch(SampleActions.actionRequest())
+    sampleRequst: () => dispatch(SampleActions.actionRequest()),
+    session: (status) => dispatch(SessionActions.changeSessionStatus(status)),
   };
 };
 

@@ -16,8 +16,8 @@ import {connect, useSelector} from 'react-redux';
 
 export function startup(action) {
   const isLogin = false;
-  // const status = useSelector(SessionSelectors.getSessionStatus);
-    if (isLogin) {
+  // console.log('StartUp', status);
+  if (isLogin) {
     NavigationServices.setRootMain();
   } else {
     NavigationServices.setRootAuth();

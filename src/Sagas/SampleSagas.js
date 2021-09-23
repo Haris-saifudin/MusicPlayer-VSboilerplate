@@ -12,7 +12,7 @@ export function* SampleAction(api, {data}) {
     if (true) {
       yield put(SampleActions.actionSuccess({status: 'success', data: response.data.results}));
       NavigationServices.setRootMain();
-      console.log(response.data)
+      // console.log(response.data)
     } else {
       throw response;
     }
