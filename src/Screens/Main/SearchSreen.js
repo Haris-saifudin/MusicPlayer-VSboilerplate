@@ -18,9 +18,22 @@ class SearchScreen extends PureComponent {
     }
   }
 
+  componentDidMount(){
+    const {music} = this.props;
+    this.getSelectMusic();
+    music(false);
+  }
+
+  getSelectMusic (){
+    const {playMusic, onPlayMusic} = this.props;
+    this.setState({
+      activeMusic: onPlayMusic,
+      statusMusic: playMusic
+    });
+  }
+
   cancel = () => {
-    const {payload, playMusic, musicList, onPlayMusic} = this.props;
-    const {music, reset, selectMusic, searchMusic} = this.props;
+    const {selectMusic} = this.props;
     Keyboard.dismiss();
     this.setState({
       query: ''
@@ -29,8 +42,7 @@ class SearchScreen extends PureComponent {
   }
 
   onSearchMusic = (text) =>{
-    const {music, reset, selectMusic, searchMusic} = this.props;
-    const {payload, playMusic, musicList, onPlayMusic} = this.props;
+    const {music, searchMusic} = this.props;
     music(false);
     this.setState({
       query: text
@@ -44,8 +56,8 @@ class SearchScreen extends PureComponent {
 
   }
 
-  onSelecMusic = (item) =>{
-    const {music, reset, selectMusic, searchMusic} = this.props;
+  onSelectMusic = (item) =>{
+    const {music, selectMusic} = this.props;
     this.setState({
       query: '',
       activeMusic: item,
@@ -85,7 +97,7 @@ class SearchScreen extends PureComponent {
                 keyExtractor={item => item.trackId.toString()}
                 renderItem={(item) =>{
                   return(
-                    <TouchableOpacity activeOpacity={0.8} onPress={ (() => this.onSelecMusic(item.item))}>
+                    <TouchableOpacity activeOpacity={0.8} onPress={ (() => this.onSelectMusic(item.item))}>
                       <View style={ApplicationStyles.card}>
                         <Image style={{height: 60, width: 60}} source={{uri: item.item.artworkUrl60}}/>
                         <View style={ApplicationStyles.description}>

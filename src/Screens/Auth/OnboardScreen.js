@@ -19,8 +19,8 @@ class OnboardScreen extends PureComponent {
 
   navigateToMain() {
     const {sampleRequst, session} = this.props;
-    // session(true);
     sampleRequst();
+    session(true);
   }
 
   navigateToRegister() {

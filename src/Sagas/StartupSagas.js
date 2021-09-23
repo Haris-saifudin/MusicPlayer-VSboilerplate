@@ -14,10 +14,11 @@ import {connect, useSelector} from 'react-redux';
 
 //  const session = yield select(SessionSelectors.getSessionStatus);
 
-export function startup(action) {
+export function* startup(action) {
+  const status = yield select(SessionSelectors.getSessionStatus);
+  console.log('startup:',status);
   const isLogin = false;
-  // console.log('StartUp', status);
-  if (isLogin) {
+  if (status) {
     NavigationServices.setRootMain();
   } else {
     NavigationServices.setRootAuth();

@@ -2,11 +2,19 @@ import React, {PureComponent} from 'react';
 import {Button, Image, FlatList, Text, View , TouchableOpacity, SafeAreaView, TextInput} from 'react-native';
 import {connect} from 'react-redux';
 import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
+import SessionActions from '../../Redux/SessionRedux';
 import ApplicationStyles from '../../Themes/ApplicationStyles';
 import Font from '../../Themes/Fonts';
 import images from '../../Themes/Images';
 
 class BrowseScreen extends PureComponent {
+  
+  logOut = () => {
+    const {session, reset} = this.props;
+    session(false);
+    reset();
+  }
+
   render() {
     const {music, reset} = this.props;
     const {onPlayMusic, playMusic} = this.props;
@@ -57,6 +65,7 @@ const mapDispatchToProps = (dispatch) => {
     music: (status) => dispatch(SampleActions.actionPlayMusic(status)),
     selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
     searchMusic: (search) => dispatch(SampleActions.actionSearchMusic(search)),
+    session: (status) => dispatch(SessionActions.changeSessionStatus(status)),
 
   };
 };
