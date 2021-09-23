@@ -3,6 +3,7 @@ import {Navigation} from 'react-native-navigation';
 import {put, select} from 'redux-saga/effects';
 import NavigationServices from '../Navigation/NavigationServices';   
 import {SessionSelectors} from '../Redux/SessionRedux';
+import {connect, useSelector} from 'react-redux';
 
 /**
  * This sagas will called at the first time when app lauch
@@ -15,11 +16,24 @@ import {SessionSelectors} from '../Redux/SessionRedux';
 
 export function startup(action) {
   const isLogin = false;
-  // console.log('session');
-  // console.log(session);
-  if (isLogin) {
+  // const status = useSelector(SessionSelectors.getSessionStatus);
+    if (isLogin) {
     NavigationServices.setRootMain();
   } else {
     NavigationServices.setRootAuth();
   }
 }
+
+// const mapStateToProps = (state) => {
+//   console.tron.error({state});
+//   return {
+//     // playMusic: SampleSelectors.getActiveMusic(state),
+//   };
+// };
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//   };
+// };
+
+// export default connect(mapStateToProps, mapDispatchToProps)(startup);

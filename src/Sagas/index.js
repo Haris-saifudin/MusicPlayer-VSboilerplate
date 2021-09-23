@@ -3,6 +3,7 @@ import {takeLatest, all} from 'redux-saga/effects';
 /* ------------- Types ------------- */
 
 import {SampleSelectors, SampleTypes} from '../Redux/SampleRedux';
+import { SessionSelectors } from '../Redux/SessionRedux';
 import {StartupTypes} from '../Redux/StartupRedux';
 import Api from '../Services/Api';
 
@@ -17,8 +18,8 @@ import {startup} from './StartupSagas';
 // to the sagas which need it.
 const api = Api.create();
 
+
 /* ------------- Connect Types To Sagas ------------- */
-  // const play = yield select(SampleSelectors.getActiveMusic);
 export default function* root() {
   yield all([
     // some sagas only receive an action
@@ -26,8 +27,6 @@ export default function* root() {
     takeLatest(SampleTypes.RESET, SampleReset),
     takeLatest(StartupTypes.STARTUP, startup),
     takeLatest(SampleTypes.ACTION_SEARCH_MUSIC, SearchAction, api),
-
-
     // some sagas receive extra parameters in addition to an action
     // takeLatest(SampleTypes.SAMPLE_REQUEST, SampleAction)
   ]);

@@ -26,9 +26,8 @@ export function SampleReset() {
 }
 
 
-export function* SearchAction(api, {search}) {
-  console.log(search);
-
+export function* SearchAction(api, {search, select}) {
+  // console.log(search);
   try {
     (response) => response.json();
     const response = yield call(api.searchMusic, search);

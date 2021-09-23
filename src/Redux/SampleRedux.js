@@ -5,7 +5,7 @@ import {createReducer, createActions} from 'reduxsauce';
 const {Types, Creators} = createActions({
   actionRequest: ['data'],
   actionSearchMusic: ['search'],
-  actionSuccess: ['payload'],
+  actionSuccess: ['payload', 'select'],
   actionFailure: null,
   reset: null,
   actionPlayMusic: ['status'],
@@ -34,7 +34,7 @@ export const INITIAL_STATE = {
 /* ------------- Selectors ------------- */
 
 export const SampleSelectors = {
-  selectAction: ({action}) => action.action,
+  selectAction: ({state}) => state.action,
   getDataAction: (state) => state.sample.action,
   getActiveMusic: (state) => state.sample.playMusic,
   getMusicList: (state) => state.sample.musicList,
@@ -54,7 +54,8 @@ export const actionRequestReducer = (state, {data}) => {
   };
 };
 
-export const actionSuccessReducer = (state, {payload}) => {
+export const actionSuccessReducer = (state, {payload, select}) => {
+  console.log(state);
   return {
     ...state.action,
     action:{
@@ -63,6 +64,7 @@ export const actionSuccessReducer = (state, {payload}) => {
         fetching: false,
         error: false,
     },
+    onPlayMusic: select,
     musicList: payload,
     playMusic: false,
   };
@@ -77,28 +79,30 @@ export const actionFailureReducer = (state) => {
 };
 
 export const actionPlayMusicReducer = (state, {status}) => {
+  console.log(state);
   return {
     ...state,
-    playMusic: status
+    playMusic: status,
   };
 };
 
 export const actionSelectMusicReducer = (state, {params}) => {
-  console.log(params)
+  console.log(state);
   return {
     ...state,
+    action: {
+      ...state.action,
+    },
     onPlayMusic: params,
-    playMusic: true
+    // playMusic: true
   };
 };
 
 export const actionSearchMusicReducer = (state, {search}) => {
-  console.log(search);
+  console.log(state);
   return {
     ...state,
     search,
-    playMusic: false,
-    
   };
 };
 /* ------------- Hookup Reducers To Types ------------- */

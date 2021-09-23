@@ -26,7 +26,7 @@ function setRootAuth() {
         children: [
           {
             component: {
-              name: NAVIGATION_NAME.AUTH.login
+              name: NAVIGATION_NAME.AUTH.onboard
             }
           }
         ],

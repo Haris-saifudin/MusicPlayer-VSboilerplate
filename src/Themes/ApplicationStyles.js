@@ -19,8 +19,17 @@ const ApplicationStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  containerOnboard: {
+    flex: 1,
+    backgroundColor: Colors.white,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: 50
+  },
   cardImages:{
-    height: 500, width: 360
+    height: 500, 
+    width: 360,
+    borderRadius: 10
   },
   containerApp:{
     flex: 1,
@@ -31,7 +40,8 @@ const ApplicationStyles = StyleSheet.create({
     flex: 1, 
     flexDirection: 'row', 
     marginTop: 12, 
-    marginHorizontal: 12
+    marginHorizontal: 12,
+    borderBottomColor: "#ececec",
   },
   image60:{
     width: 60, 
@@ -55,7 +65,13 @@ const ApplicationStyles = StyleSheet.create({
   titleCard:{
     height: 22, 
     fontSize: Font.size.regular, 
-    fontFamily: Font.type.bold
+    fontFamily: Font.type.bold,
+    fontWeight: 'bold'
+  },
+  titleOnBoard:{
+    fontFamily: Font.type.bold,
+    fontSize: Font.size.h2, 
+    fontWeight: 'bold'
   },
   playMusic:{
     // position: 'absolute',
@@ -70,7 +86,8 @@ const ApplicationStyles = StyleSheet.create({
     height: 22, 
     width: 270,
     fontSize: Font.size.regular, 
-    fontFamily: Font.type.bold
+    fontFamily: Font.type.bold,
+    fontWeight: 'bold'
   },
   topBar:{
     flexDirection: 'row',

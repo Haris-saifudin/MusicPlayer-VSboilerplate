@@ -12,19 +12,19 @@ class PlayScreen extends PureComponent {
     const {onPlayMusic, playMusic} = this.props;
     return (
       <View style={ApplicationStyles.containerApp}>
-        {(onPlayMusic) ? (
+          {(onPlayMusic) ? (
         <View style={ApplicationStyles.playMusic}>
           <Image style={{width: 40, height: 40}} source={{uri: onPlayMusic.artworkUrl60}}/> 
           <View style={ApplicationStyles.description}>
-            <Text style={ApplicationStyles.trackName}>{onPlayMusic.trackName}</Text>
+            <Text style={ApplicationStyles.trackName}>{onPlayMusic.trackCensoredName}</Text>
             <Text style={Font.style.normal, {height: 22}}>{onPlayMusic.artistName} - {onPlayMusic.collectionName}</Text>
           </View>
-          <TouchableOpacity activeOpacity={0.8} onPress={music}>
+          <TouchableOpacity activeOpacity={0.8} onPress={() => music(!playMusic)}>
             { (playMusic)?  <Image source={images.play} style={ApplicationStyles.image20} /> :
               <Image source={images.pause} style={ApplicationStyles.image20} />
             }
           </TouchableOpacity>
-        </View>) :(<View style={ApplicationStyles.playMusic}>
+        </View>) : (<View style={ApplicationStyles.playMusic}>
           <View style={ApplicationStyles.boxImage}/>
           <View style={ApplicationStyles.description}>
             <Text style={Font.style.h6}>Not Playing</Text>
@@ -38,8 +38,9 @@ class PlayScreen extends PureComponent {
   }
 }
 
+
 const mapStateToProps = (state) => {
-  console.tron.error({state});
+  // console.tron.error({state});
   return {
     payload: SampleSelectors.getDataAction(state),
     playMusic: SampleSelectors.getActiveMusic(state),
@@ -51,8 +52,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     reset: () => dispatch(SampleActions.reset()),
-    music: () => dispatch(SampleActions.actionPlayMusic()),
-    selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params))
+    music: (status) => dispatch(SampleActions.actionPlayMusic(status)),
+    selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
+    searchMusic: (search) => dispatch(SampleActions.actionSearchMusic(search)),
 
   };
 };

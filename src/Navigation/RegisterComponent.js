@@ -14,12 +14,14 @@ import BrowseScreen from '../Screens/Main/BrowseScreen';
 import RadioScreen from '../Screens/Main/RadioScreen';
 import LibraryScreen from '../Screens/Main/LibraryScreen';
 import PlayScreen from '../Screens/Main/PlayScreen';
+import OnboardScreen from '../Screens/Auth/OnboardScreen';
 
 export const NAVIGATION_NAME = {
   APP: 'app',
   AUTH: {
     login: 'auth.login',
-    register: 'auth.register'
+    register: 'auth.register',
+    onboard: 'auth.onboard'
   },
   MAIN: {
     main: 'main.main',
@@ -61,6 +63,9 @@ export default function () {
     ReduxWrapper(Toast)
   );
 
+  Navigation.registerComponent(NAVIGATION_NAME.AUTH.onboard, () =>
+    ReduxWrapper(OnboardScreen)
+  );
   Navigation.registerComponent(NAVIGATION_NAME.MAIN.browse, () =>
     ReduxWrapper(BrowseScreen)
   );
