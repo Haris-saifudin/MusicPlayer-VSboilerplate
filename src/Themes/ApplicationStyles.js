@@ -11,7 +11,7 @@ const ApplicationStyles = StyleSheet.create({
   containerSearch: {
     flex: 1,
     backgroundColor: Colors.white,
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
   containerCenter: {
     flex: 1,
@@ -100,7 +100,7 @@ const ApplicationStyles = StyleSheet.create({
   textInput:{
     backgroundColor: Colors.white, 
     height: 40, 
-    width: 300, 
+    width: 305, 
     paddingHorizontal: 10, 
     borderRadius: 10
   },

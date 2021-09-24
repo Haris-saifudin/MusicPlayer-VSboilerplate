@@ -1,6 +1,8 @@
 /**
  * @format
  */
+// import TrackPlayer from 'react-native-track-player';
+// TrackPlayer.registerPlaybackService(() => require('./service'));
 
 require('./src/Config/ReactotronConfig');
 

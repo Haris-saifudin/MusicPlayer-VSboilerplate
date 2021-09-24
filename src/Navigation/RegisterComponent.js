@@ -15,6 +15,10 @@ import RadioScreen from '../Screens/Main/RadioScreen';
 import LibraryScreen from '../Screens/Main/LibraryScreen';
 import PlayScreen from '../Screens/Main/PlayScreen';
 import OnboardScreen from '../Screens/Auth/OnboardScreen';
+import CardMusic from '../Components/CardMusic';
+import TrackPlayer from 'react-native-track-player';
+
+
 
 export const NAVIGATION_NAME = {
   APP: 'app',
@@ -36,10 +40,12 @@ export const NAVIGATION_NAME = {
     modal: 'component.modal',
     alert: 'component.alert',
     toast: 'component.toast',
+    cardMusic: 'component.cardMusic',
   }
 };
 
 export default function () {
+  TrackPlayer.registerPlaybackService(() => require('../../service'));
   Navigation.registerComponent(NAVIGATION_NAME.APP, () => ReduxWrapper(App));
   Navigation.registerComponent(NAVIGATION_NAME.AUTH.login, () =>
     ReduxWrapper(LoginScreen)
@@ -61,6 +67,9 @@ export default function () {
   );
   Navigation.registerComponent(NAVIGATION_NAME.COMPONENTS.toast, () =>
     ReduxWrapper(Toast)
+  );
+  Navigation.registerComponent(NAVIGATION_NAME.COMPONENTS.cardMusic, () =>
+    ReduxWrapper(CardMusic)
   );
 
   Navigation.registerComponent(NAVIGATION_NAME.AUTH.onboard, () =>

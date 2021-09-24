@@ -5,7 +5,7 @@ import {createReducer, createActions} from 'reduxsauce';
 const {Types, Creators} = createActions({
   actionRequest: ['data'],
   actionSearchMusic: ['search'],
-  actionSuccess: ['payload', 'select'],
+  actionSuccess: ['payload'],
   actionFailure: null,
   reset: null,
   actionPlayMusic: ['status'],
@@ -34,7 +34,7 @@ export const INITIAL_STATE = {
 /* ------------- Selectors ------------- */
 
 export const SampleSelectors = {
-  selectAction: ({state}) => state.action,
+  selectAction: ({state}) => state.sample,
   getDataAction: (state) => state.sample.action,
   getActiveMusic: (state) => state.sample.playMusic,
   getMusicList: (state) => state.sample.musicList,
@@ -48,38 +48,36 @@ export const SampleSelectors = {
 
 export const actionRequestReducer = (state, {data}) => {
   return {
-    ...state.action,
+    ...state,
     fetching: true,
     data
   };
 };
 
-export const actionSuccessReducer = (state, {payload, select}) => {
-  console.log(state);
+export const actionSuccessReducer = (state, {payload}) => {
   return {
-    ...state.action,
+    ...state,
     action:{
-        ...state.action,
         payload,
         fetching: false,
         error: false,
     },
-    onPlayMusic: select,
     musicList: payload,
-    playMusic: false,
+    playMusic: false
   };
 };
 
 export const actionFailureReducer = (state) => {
   return {
-    ...state.action,
-    fetching: false,
-    error: true
+    ...state,
+    action:{
+      fetching: false,
+      error: true
+    }
   };
 };
 
 export const actionPlayMusicReducer = (state, {status}) => {
-  console.log(state);
   return {
     ...state,
     playMusic: status,
@@ -87,19 +85,13 @@ export const actionPlayMusicReducer = (state, {status}) => {
 };
 
 export const actionSelectMusicReducer = (state, {params}) => {
-  console.log(state);
   return {
     ...state,
-    action: {
-      ...state.action,
-    },
     onPlayMusic: params,
-    // playMusic: true
   };
 };
 
 export const actionSearchMusicReducer = (state, {search}) => {
-  console.log(state);
   return {
     ...state,
     search,

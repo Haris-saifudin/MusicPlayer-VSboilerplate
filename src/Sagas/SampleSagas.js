@@ -9,7 +9,7 @@ export function* SampleAction(api, {data}) {
     (response) => response.json();
     const response = yield call(api.searchMusic, 'justin');
     // if (response.ok) {
-    if (true) {
+    if (response.ok) {
       yield put(SampleActions.actionSuccess({status: 'success', data: response.data.results}));
       NavigationServices.setRootMain();
       // console.log(response.data)
@@ -32,7 +32,8 @@ export function* SearchAction(api, {search, select}) {
     (response) => response.json();
     const response = yield call(api.searchMusic, search);
     // if (response.ok) {
-    if (true) {
+    
+    if (response.ok) {
       yield put(SampleActions.actionSuccess({status: 'success', data: response.data.results}));
       // NavigationServices.setRootMain();
       // console.log(response.data)
