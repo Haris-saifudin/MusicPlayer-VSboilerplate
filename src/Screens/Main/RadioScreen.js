@@ -3,16 +3,14 @@ import {Button, Image, FlatList, Text, View , TouchableOpacity, SafeAreaView, Te
 import {connect} from 'react-redux';
 import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
 import ApplicationStyles from '../../Themes/ApplicationStyles';
-import Font from '../../Themes/Fonts';
-import images from '../../Themes/Images';
-import CardMusic from '../../Components/CardMusic';
+import MusicCard from '../../Components/MusicCard';
 
 
 class RadioScreen extends PureComponent {
   render() {
     return (
       <View style={ApplicationStyles.containerApp}>
-         <CardMusic />
+         <MusicCard />
       </View>
     );
   }

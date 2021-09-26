@@ -4,7 +4,7 @@ const DefaultOptions = {
   statusBar: {
     visible: true, // Optional
     style: 'dark', // Optional ('light', 'dark')
-    backgroundColor: '#ECECEC', // Optional, Android only
+    backgroundColor: 'white', // Optional, Android only
     drawBehind: false, // Optional, Android only
     translucent: false, // Optional, Android only
     animated: true, // Optional, IOs only

@@ -11,7 +11,10 @@ const images = {
   library: require('../Images/library.png'),
   circleplay: require('../Images/circleplay.png'),
   browse: require('../Images/browse.png'),
-  card: require('../Images/cardItunes.png')
+  card: require('../Images/cardItunes.png'),
+  next: require('../Images/next.png'),
+  previous: require('../Images/previous.png')
+
 };
 
 export default images;

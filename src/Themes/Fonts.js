@@ -59,6 +59,11 @@ const style = {
   tiny: {
     fontFamily: type.base,
     fontSize: size.tiny
+  },
+  description:{
+    fontFamily: type.base,
+    fontSize: size.input,
+    height: 24
   }
 };
 

@@ -14,10 +14,6 @@ class LoginScreen extends PureComponent {
     this.navigateToMain = this.navigateToMain.bind(this);
     this.navigateToRegister = this.navigateToRegister.bind(this);
   }
-  componentDidMount(){
-    // const {payload} = this.props;
-    // console.log(payload)
-  }
 
   navigateToMain() {
     const {sampleRequst} = this.props;

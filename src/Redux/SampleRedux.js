@@ -10,6 +10,7 @@ const {Types, Creators} = createActions({
   reset: null,
   actionPlayMusic: ['status'],
   actionSelectMusic: ['params'],
+  actionVisibility: null,
 });
 
 export const SampleTypes = Types;
@@ -28,7 +29,8 @@ export const INITIAL_STATE = {
   playMusic: false,
   onPlayMusic:[],
   search: undefined,
-  massage: {}
+  massage: {},
+  visibility: true
 };
 
 /* ------------- Selectors ------------- */
@@ -40,7 +42,7 @@ export const SampleSelectors = {
   getMusicList: (state) => state.sample.musicList,
   getOnPlayMusic: (state) => state.sample.onPlayMusic,
   searchAction: (state) => state.sample.search,
-
+  getVisibility: (state) => state.sample.visibility
 };
 
 /* ------------- Reducers ------------- */
@@ -63,7 +65,8 @@ export const actionSuccessReducer = (state, {payload}) => {
         error: false,
     },
     musicList: payload,
-    playMusic: false
+    playMusic: false,
+    onPlayMusic: false,
   };
 };
 
@@ -88,6 +91,14 @@ export const actionSelectMusicReducer = (state, {params}) => {
   return {
     ...state,
     onPlayMusic: params,
+    visibility: true,
+  };
+};
+
+export const actionVisibilityReducer = (state) => {
+  return {
+    ...state,
+    visibility: false,
   };
 };
 
@@ -95,6 +106,8 @@ export const actionSearchMusicReducer = (state, {search}) => {
   return {
     ...state,
     search,
+    onPlayMusic: false,
+    visibility: false,
   };
 };
 /* ------------- Hookup Reducers To Types ------------- */
@@ -106,4 +119,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.ACTION_PLAY_MUSIC]: actionPlayMusicReducer,
   [Types.ACTION_SELECT_MUSIC]: actionSelectMusicReducer,
   [Types.ACTION_SEARCH_MUSIC]: actionSearchMusicReducer,
+  [Types.ACTION_VISIBILITY]: actionVisibilityReducer
 });

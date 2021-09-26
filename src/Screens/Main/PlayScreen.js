@@ -5,14 +5,14 @@ import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
 import ApplicationStyles from '../../Themes/ApplicationStyles';
 import NavigationServices from '../../Navigation/NavigationServices';
 import {NAVIGATION_NAME} from '../../Navigation/RegisterComponent';
-import CardMusic from '../../Components/CardMusic';
+import MusicCard from '../../Components/MusicCard';
 
 class PlayScreen extends PureComponent {
 
   render() {
     return (
       <View style={ApplicationStyles.containerApp}>
-        <CardMusic />
+        <MusicCard />
       </View>
     );
   }

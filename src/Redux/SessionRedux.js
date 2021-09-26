@@ -25,7 +25,6 @@ export const SessionSelectors = {
 /* ------------- Reducers ------------- */
 
 export const changeSessionStatusReducer = (state, {status}) => {
-  console.log('action request');  
   return {
     hasSession: status
   };

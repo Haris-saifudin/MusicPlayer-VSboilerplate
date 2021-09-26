@@ -47,11 +47,9 @@ class OnboardScreen extends PureComponent {
         <View style={{width: 360}}>
           <Text style={ApplicationStyles.titleOnBoard}>Listen Now</Text>
         </View>
-        {/* <View style={ApplicationStyles.containerOnboard}> */}
         <TouchableOpacity activeOpacity={0.8}  onPress={this.navigateToMain}>
           <Image style={ApplicationStyles.cardImages} source={images.card}/>
         </TouchableOpacity>
-        {/* </View> */}
       </View>
     );
   }
