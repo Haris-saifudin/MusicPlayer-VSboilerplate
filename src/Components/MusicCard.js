@@ -24,17 +24,21 @@ import Font from '../Themes/Fonts';
 import images from '../Themes/Images';
 
 
+
+
 const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic}) => {
   const playbackState = usePlaybackState();
   const [trackArtwork, setTrackArtwork] = useState();
   const [trackTitle, setTrackTitle] = useState();
   const [currentTrack, setCurrentTrack] = useState();
 
+
   useTrackPlayerEvents([Event.PlaybackTrackChanged], async event => {
     if (
       event.type === Event.PlaybackTrackChanged &&
       event.nextTrack !== undefined
     ) {
+      //get current play
       const track = await TrackPlayer.getTrack(event.nextTrack);
       const currentTrack = await TrackPlayer.getCurrentTrack();
       const {title, artist, artwork} = track || {};
@@ -43,17 +47,18 @@ const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic}) => {
       setCurrentTrack(currentTrack);
     }
   });
-  const playingMusic = async() =>{
-    const currentTrack = await TrackPlayer.getCurrentTrack();
-    console.log('[Trackplayer] playback :',playbackState);
-    console.log('[Trackplayer] current track:',currentTrack);
 
+ 
+
+  //toggle play and pause music
+  const playingMusic = async() =>{
     if (playbackState === State.Paused) {
       await TrackPlayer.play();
     } else {
       await TrackPlayer.pause();
     }
   }
+
   useEffect(() => {
     selectMusic(false);
   }, []);
@@ -63,7 +68,6 @@ const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic}) => {
          {(visibility)?
           ((onPlayMusic)?
             (<View style={ApplicationStyles.playMusic}>
-              {/* <Image style={{width: 40, height: 40, borderRadius: 3}} source={{uri: trackArtwork}}/>  */}
               <FastImage style={{height: 40, width: 40, borderRadius: 3}} 
                 source={{
                   uri: trackArtwork,

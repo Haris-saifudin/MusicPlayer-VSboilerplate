@@ -35,7 +35,7 @@ const create = (baseURL = 'https://itunes.apple.com/') => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
-  const searchMusic = (keyword) => api.get(`search?media=music&entity=song&term=${keyword}`);
+  const searchMusic = (type, keyword) => api.get(`search?media=music&entity=${type}&term=${keyword}`);
   
   // ------
   // STEP 3

@@ -6,6 +6,9 @@ import ApplicationStyles from '../../Themes/ApplicationStyles';
 import Search from '../../Components/MusicSearch';
 import MusicCard from '../../Components/MusicCard';
 import MusicList from '../../Components/MusicList';
+import { SessionSelectors } from '../../Redux/SessionRedux';
+import TrackPlayer, {Capability} from 'react-native-track-player';
+import { UpdatePlayList } from '../../Components/MusicList';
 
 class SearchScreen extends PureComponent {
   constructor(props){
@@ -15,6 +18,16 @@ class SearchScreen extends PureComponent {
       activeMusic: [],
       value: '',
     }
+  }
+
+  componentDidMount(){
+   this.updateMusic()
+  }
+
+  updateMusic = async() =>{
+    const {musicList} = this.props;
+    const queue = await TrackPlayer.getQueue();
+    UpdatePlayList(musicList.data, musicList.count);
   }
 
   render() {
@@ -29,10 +42,13 @@ class SearchScreen extends PureComponent {
   }
 }
 
+
 const mapStateToProps = (state) => {
   console.tron.error({state});
   return {
     payload: SampleSelectors.getDataAction(state),
+    session: SessionSelectors.getSessionStatus(state),
+    musicList: SampleSelectors.getMusicList(state),
   }
 };
 

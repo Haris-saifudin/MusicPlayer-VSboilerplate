@@ -32,6 +32,7 @@ const ApplicationStyles = StyleSheet.create({
   cardImages:{
     height: 500, 
     width: 360,
+    marginTop: 12,
     borderRadius: 10
   },
   containerApp:{
@@ -42,13 +43,20 @@ const ApplicationStyles = StyleSheet.create({
   card:{
     flex: 1, 
     flexDirection: 'row', 
-    marginVertical: 6, 
-    marginHorizontal: 12,
+    paddingVertical: 10, 
+    marginHorizontal: 16,
     borderBottomColor: "#ececec",
+    borderBottomWidth: 2
   },
   image60:{
-    width: 60, 
-    height: 60
+    width: 55, 
+    height: 55,
+    borderRadius: 3
+  },
+  imageAlbum:{
+    width: 55, 
+    height: 55,
+    borderRadius: 30
   },
   image40:{
     width: 40, 
@@ -108,16 +116,17 @@ const ApplicationStyles = StyleSheet.create({
   tabBar:{
     flexDirection: 'row', 
     justifyContent: 'space-between',
-    marginVertical: 6
+    marginVertical: 6,
+    marginHorizontal: 16
   },
   activeTabBar:{
-    width: windowWidth/2, 
+    width: windowWidth/2-16, 
     paddingBottom: 8, 
     borderBottomColor: '#ff0000',
     borderBottomWidth: 1.5
   },
   defaultTabBar:{
-    width: windowWidth/2, 
+    width: windowWidth/2-16, 
     paddingBottom: 8, 
   },
   activeTextTabBar:{
@@ -137,7 +146,7 @@ const ApplicationStyles = StyleSheet.create({
   textInput:{
     backgroundColor: Colors.white, 
     height: 40, 
-    width: 305, 
+    width: windowWidth-32-60, 
     paddingHorizontal: 10, 
     borderRadius: 10,
     backgroundColor: '#ececec',

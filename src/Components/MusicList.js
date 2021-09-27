@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {Image, FlatList, Text, View , TouchableOpacity, Button, Dimensions} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import SampleActions, { SampleSelectors } from '../Redux/SampleRedux';
 import ApplicationStyles from '../Themes/ApplicationStyles';
-import TrackPlayer from 'react-native-track-player';
+import TrackPlayer, {Capability} from 'react-native-track-player';
 
-class MusicList extends Component {
+class MusicList extends PureComponent {
   constructor(props){
     super(props);
     this.state = ({
@@ -17,21 +17,26 @@ class MusicList extends Component {
       }
     })
   }
+  
 
   onSelectMusic = async(item, index) =>{
     const {selectMusic, musicList, setVisibility} = this.props;
     this.setState({
       query: '',
+      updatePlayList: true,
     });
-    const queue = await TrackPlayer.getQueue();
-    if(queue){
-      this.setState({
-        updatePlayList: true,
-      });
-      selectMusic(item);
-      await TrackPlayer.skip(index);
-      await TrackPlayer.play();
-    }
+    selectMusic(item);
+    await TrackPlayer.skip(index);
+    await TrackPlayer.play()
+    let prev = 0; 
+    // const throttle = async() =>{
+    //   let now = new Date().getTime();
+    //   console.log(now-prev); 
+    //   if(now - prev > 200){ 
+    //     prev = now;
+    //   }
+    // }
+    // throttle;
   }
 
   
@@ -39,7 +44,7 @@ class MusicList extends Component {
     return(
       <TouchableOpacity activeOpacity={0.8} onPress={ () => this.onSelectMusic(item, index)}>
         <View style={ApplicationStyles.card}>
-          <FastImage style={{height: 60, width: 60, borderRadius: 3}} 
+          <FastImage style={ApplicationStyles.image60} 
             source={{
               uri: item.artworkUrl60,
               priority: FastImage.priority.normal
@@ -55,7 +60,27 @@ class MusicList extends Component {
     )
   }
 
-  onPressTabBar(type){
+  renderItemAlbum = (item, index) =>{
+    return(
+      <TouchableOpacity activeOpacity={0.8}>
+        <View style={ApplicationStyles.card}>
+          <FastImage style={ApplicationStyles.imageAlbum} 
+            source={{
+              uri: item.artworkUrl60,
+              priority: FastImage.priority.normal
+            }}
+            resizeMode={FastImage.resizeMode.contain}
+          />
+          <View style={ApplicationStyles.description}>
+            <Text style={ApplicationStyles.titleCard}>{item.collectionCensoredName}</Text>
+            <Text style={{height: 22}}>{item.collectionType}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
+  onPressTabBar (type){
     switch(type){
       case "artist":
         this.setState({
@@ -78,7 +103,8 @@ class MusicList extends Component {
 }
 
   render() {
-    const {musicList} = this.props;
+    const {musicList, payload} = this.props;
+    const ITEM_HEIGHT = 66;
     return (
       <View style={{flex: 1}}>
         <View style={ApplicationStyles.tabBar}>
@@ -97,11 +123,23 @@ class MusicList extends Component {
             }>ALBUM</Text>
           </TouchableOpacity>
         </View>
-        <FlatList 
-          data={musicList.data}
-          keyExtractor={item => item.trackId}
-          renderItem={({item, index}) => this.renderItem(item, index)}  
-        />
+        {(payload.error)? null: 
+          <FlatList 
+            data={(this.state.tabBar.artist) ? musicList.data : musicList.album}
+            keyExtractor={item => (this.state.tabBar.artist) ? 
+              item.trackId.toString(): item.collectionId.toString()
+            }
+            getItemLayout={(data, index) => (
+              {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index}
+            )}
+            maxToRenderPerBatch={7}
+            windowSize={18}
+            renderItem={({item, index}) => ((this.state.tabBar.artist) ? 
+            this.renderItem(item, index): this.renderItemAlbum(item, index))
+          }  
+          />
+        }
+
       </View>
     );
   }
@@ -126,5 +164,40 @@ const mapDispatchToProps = (dispatch) => {
     setVisibility: () => dispatch(SampleActions.actionVisibility()),
   };
 };
+
+
+export const UpdatePlayList = async (musicList, count, search) => {
+  await TrackPlayer.reset();
+  await TrackPlayer.setupPlayer();
+  let  playlist = [];
+  for ( var index = 0; index < count; index++){
+    playlist.push({
+        url: musicList[index].previewUrl,
+        title: musicList[index].trackCensoredName,
+        artist: musicList[index].artistName,
+        artwork: musicList[index].artworkUrl60,
+    });
+  }
+  await TrackPlayer.add(playlist);
+  await TrackPlayer.stop();
+  await TrackPlayer.updateOptions({
+    stopWithApp: true,
+    capabilities: [
+      Capability.Play,
+      Capability.Pause,
+      Capability.SkipToNext,
+      Capability.SkipToPrevious,
+      Capability.Stop,
+    ],
+    compactCapabilities: [Capability.Play, Capability.Pause],
+  });
+  // await TrackPlayer.setRepeatMode(RepeatMode.Queue);
+  const queue = await TrackPlayer.getQueue();
+  if(queue){
+    console.log('[add playlist]');
+  }
+  console.log('[update music list]', search);
+};
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(MusicList);

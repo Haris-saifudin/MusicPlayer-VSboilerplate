@@ -15,6 +15,7 @@ class Search extends PureComponent {
     }
   }
 
+  
   cancel(){
     Keyboard.dismiss();
     this.setState({
@@ -22,14 +23,14 @@ class Search extends PureComponent {
     });
   }
 
+  
   onSearchMusic(text){
     const {music, searchMusic} = this.props;
     this.setState({
       query: text,
     });
     music(false);
-    // console.log(this.state.query.charCodeAt(0));
-    const debouncedSave = debounce(() => searchMusic(this.state.query), 1000);
+    const debouncedSave = debounce(() => searchMusic(this.state.query), 500);
     debouncedSave();
   }
 
@@ -59,6 +60,7 @@ class Search extends PureComponent {
     );
   }
 }
+
 
 const mapStateToProps = (state) => {
   // console.tron.error({state});
