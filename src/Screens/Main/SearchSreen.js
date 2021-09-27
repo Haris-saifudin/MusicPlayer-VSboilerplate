@@ -9,6 +9,7 @@ import MusicList from '../../Components/MusicList';
 import { SessionSelectors } from '../../Redux/SessionRedux';
 import TrackPlayer, {Capability} from 'react-native-track-player';
 import { UpdatePlayList } from '../../Components/MusicList';
+import NavigationMusic from '../../Components/NavigationMusic';
 
 class SearchScreen extends PureComponent {
   constructor(props){
@@ -24,9 +25,8 @@ class SearchScreen extends PureComponent {
    this.updateMusic()
   }
 
-  updateMusic = async() =>{
+  updateMusic = () =>{
     const {musicList} = this.props;
-    const queue = await TrackPlayer.getQueue();
     UpdatePlayList(musicList.data, musicList.count);
   }
 
@@ -35,7 +35,12 @@ class SearchScreen extends PureComponent {
     return (
       <View style={ApplicationStyles.containerSearch}>
         <Search />
-        {(payload.payload)?<MusicList/> : null}
+        {(payload.error)? null : 
+          <>
+              <NavigationMusic/>
+              <MusicList/>
+          </>
+        }
         <MusicCard/>
       </View>
     );

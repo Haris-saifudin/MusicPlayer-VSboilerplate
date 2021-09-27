@@ -13,7 +13,6 @@ class LibraryScreen extends PureComponent {
     return (
       <View style={ApplicationStyles.containerApp}>
         <MusicCard/>
-
       </View>
     );
   }

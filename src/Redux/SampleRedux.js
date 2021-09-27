@@ -11,6 +11,7 @@ const {Types, Creators} = createActions({
   actionPlayMusic: ['status'],
   actionSelectMusic: ['params'],
   actionVisibility: null,
+  actionNavBarMusic: ['navbar'],
 });
 
 export const SampleTypes = Types;
@@ -30,7 +31,11 @@ export const INITIAL_STATE = {
   onPlayMusic:[],
   search: undefined,
   massage: {},
-  visibility: true
+  visibility: true,
+  nav: {
+    song: true,
+    album: false
+  }
 };
 
 /* ------------- Selectors ------------- */
@@ -42,7 +47,8 @@ export const SampleSelectors = {
   getMusicList: (state) => state.sample.musicList,
   getOnPlayMusic: (state) => state.sample.onPlayMusic,
   searchAction: (state) => state.sample.search,
-  getVisibility: (state) => state.sample.visibility
+  getVisibility: (state) => state.sample.visibility,
+  getNavMusic: (state) => state.sample.nav
 };
 
 /* ------------- Reducers ------------- */
@@ -87,6 +93,27 @@ export const actionPlayMusicReducer = (state, {status}) => {
   };
 };
 
+export const actionNavBarMusicReducer = (state, {navbar}) => {
+  if(navbar === 'song'){
+    return {
+      ...state,
+      nav:{
+        song: true,
+        album: false
+      }
+    };
+  }
+  else{
+    return {
+      ...state,
+      nav:{
+        song: false,
+        album: true
+      }
+    };
+  }
+};
+
 export const actionSelectMusicReducer = (state, {params}) => {
   return {
     ...state,
@@ -119,5 +146,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.ACTION_PLAY_MUSIC]: actionPlayMusicReducer,
   [Types.ACTION_SELECT_MUSIC]: actionSelectMusicReducer,
   [Types.ACTION_SEARCH_MUSIC]: actionSearchMusicReducer,
-  [Types.ACTION_VISIBILITY]: actionVisibilityReducer
+  [Types.ACTION_VISIBILITY]: actionVisibilityReducer,
+  [Types.ACTION_NAV_BAR_MUSIC]: actionNavBarMusicReducer,
 });

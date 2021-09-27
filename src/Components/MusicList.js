@@ -13,9 +13,8 @@ class MusicList extends PureComponent {
     this.state = ({
       query: '',
       tabBar:{
-        artist: true,
+        song: true,
         album: false,
-        
       },
       data: true
     })
@@ -23,33 +22,25 @@ class MusicList extends PureComponent {
   
 
   onSelectMusic = async(item, index) =>{
-    const {selectMusic, musicList, setVisibility} = this.props;
-    console.log('[onSelectMusic] ', index);
-
+    const {selectMusic} = this.props;
     this.setState({
       query: '',
       updatePlayList: true,
      
     });
     selectMusic(item);
+
+    //select playlist
     await TrackPlayer.skip(index);
     await TrackPlayer.play()
   }
 
   _throttle = (item, index) =>{
-    // console.log('[throttle] ', index);
-    // console.log('[throttle] ', this.state.data);
-   
-    // const throttling = throttle(() => this.onSelectMusic(item, index), 1000);
-    const _debounce = debounce(() => this.setState({data: true}), 1000);
-    _debounce();
-    if(this.state.data){
-      this.onSelectMusic(item, index);
-      this.setState({data: false})
-    }
+    const throttling = throttle(() => this.onSelectMusic(item, index), 1000);
+    throttling();
   }
 
-  
+  // render by song
   renderItem = (item, index) =>{
     return(
       <TouchableOpacity activeOpacity={0.8} onPress={ () => this._throttle(item, index)}>
@@ -70,6 +61,7 @@ class MusicList extends PureComponent {
     )
   }
 
+  // render by album
   renderItemAlbum = (item, index) =>{
     return(
       <TouchableOpacity activeOpacity={0.8}>
@@ -90,66 +82,26 @@ class MusicList extends PureComponent {
     )
   }
 
-  onPressTabBar (type){
-    switch(type){
-      case "artist":
-        this.setState({
-          tabBar:{
-            artist: true,
-            album: false
-          }
-        }); break;
-      
-      case "album" : {
-        this.setState({
-          tabBar:{
-            artist: false,
-            album: true
-          }
-        }); break;
-      }
-      default: null
-  }
-}
-
   render() {
-    const {musicList, payload} = this.props;
+    const {musicList, navMusic} = this.props;
     const ITEM_HEIGHT = 66;
+    console.log("[search screen]");
     return (
-      <View style={{flex: 1}}>
-        <View style={ApplicationStyles.tabBar}>
-          <TouchableOpacity activeOpacity={0.8} style={
-            (this.state.tabBar.artist)? ApplicationStyles.activeTabBar: ApplicationStyles.defaultTabBar}
-            onPress={() => this.onPressTabBar('artist')}>
-            <Text style={
-              (this.state.tabBar.artist)? ApplicationStyles.activeTextTabBar:  ApplicationStyles.defaultTextTabBar
-            }>ARTIST</Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.8} style={
-            (this.state.tabBar.album)? ApplicationStyles.activeTabBar: ApplicationStyles.defaultTabBar}
-            onPress={() => this.onPressTabBar('album')}>
-            <Text style={
-              (this.state.tabBar.album)? ApplicationStyles.activeTextTabBar:  ApplicationStyles.defaultTextTabBar
-            }>ALBUM</Text>
-          </TouchableOpacity>
-        </View>
-        {(payload.error)? null: 
-          <FlatList 
-            data={(this.state.tabBar.artist) ? musicList.data : musicList.album}
-            keyExtractor={item => (this.state.tabBar.artist) ? 
-              item.trackId.toString(): item.collectionId.toString()
-            }
-            getItemLayout={(data, index) => (
-              {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index}
-            )}
-            maxToRenderPerBatch={7}
-            windowSize={18}
-            renderItem={({item, index}) => ((this.state.tabBar.artist) ? 
-            this.renderItem(item, index): this.renderItemAlbum(item, index))
-          }  
-          />
-        }
-
+      <View style={{flex: 1}}>      
+        <FlatList 
+          data={(navMusic.song) ? musicList.data : musicList.album}
+          keyExtractor={item => (navMusic.song) ? 
+            item.trackId.toString(): item.collectionId.toString()
+          }
+          getItemLayout={(data, index) => (
+            {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index}
+          )}
+          maxToRenderPerBatch={7}
+          windowSize={18}
+          renderItem={({item, index}) => ((navMusic.song) ? 
+          this.renderItem(item, index): this.renderItemAlbum(item, index))
+        }  
+        />
       </View>
     );
   }
@@ -162,6 +114,7 @@ const mapStateToProps = (state) => {
     playMusic: SampleSelectors.getActiveMusic(state),
     musicList: SampleSelectors.getMusicList(state),
     onPlayMusic: SampleSelectors.getOnPlayMusic(state),
+    navMusic: SampleSelectors.getNavMusic(state)
   }
 };
 
@@ -175,7 +128,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-
+// update play list
 export const UpdatePlayList = async (musicList, count, search) => {
   await TrackPlayer.reset();
   await TrackPlayer.setupPlayer();
@@ -206,10 +159,10 @@ export const UpdatePlayList = async (musicList, count, search) => {
       Capability.Stop,],
   });
   // await TrackPlayer.setRepeatMode(RepeatMode.Queue);
-  const queue = await TrackPlayer.getQueue();
-  if(queue){
-    console.log('[add playlist]');
-  }
+  // const queue = await TrackPlayer.getQueue();
+  // if(queue){
+  //   console.log('[add playlist]');
+  // }
   console.log('[update music list]', search);
 };
 

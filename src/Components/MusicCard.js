@@ -48,8 +48,6 @@ const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic}) => {
     }
   });
 
- 
-
   //toggle play and pause music
   const playingMusic = async() =>{
     if (playbackState === State.Paused) {
@@ -65,50 +63,41 @@ const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic}) => {
 
   return (
     <View>
-         {(visibility)?
-          ((onPlayMusic)?
-            (<View style={ApplicationStyles.playMusic}>
-              <FastImage style={{height: 40, width: 40, borderRadius: 3}} 
-                source={{
-                  uri: trackArtwork,
-                  priority: FastImage.priority.high
-                }} />
+      {(visibility)?
+        ((onPlayMusic)?
+          (<View style={ApplicationStyles.playMusic}>
+            <FastImage style={{height: 40, width: 40, borderRadius: 3}} 
+              source={{
+                uri: trackArtwork,
+                priority: FastImage.priority.high
+              }} />
 
-              <View style={ApplicationStyles.description}>
-                <Text style={{height: 22}, Font.style.description}>{trackTitle}</Text>
-              </View>
-              {(currentTrack !== 0) ? 
+            <View style={ApplicationStyles.description}>
+              <Text style={{height: 22}, Font.style.description}>{trackTitle}</Text>
+            </View>
+
+            {(currentTrack !== 0) ? 
               (<TouchableOpacity activeOpacity={0.6} onPress={() => TrackPlayer.skipToPrevious()}>
                 <Image source={images.previous} style={ApplicationStyles.icon} /> 
-              </TouchableOpacity>): null}
-              <TouchableOpacity activeOpacity={0.6}  onPress={() => playingMusic()}>
-                <Image source={(playbackState === State.Stopped)? images.pause : ((playbackState === State.Playing) ? images.play: images.pause)} 
-                style={ApplicationStyles.iconCardMusic} /> 
-              </TouchableOpacity>
-              {(currentTrack === (musicList.count -1))? <View style={ApplicationStyles.icon} /> :
-                <TouchableOpacity activeOpacity={0.6} onPress={() => TrackPlayer.skipToNext()}>
+              </TouchableOpacity>)
+              : null
+            }
+
+            <TouchableOpacity activeOpacity={0.6}  onPress={() => playingMusic()}>
+              <Image source={(playbackState === State.Stopped)? images.pause : ((playbackState === State.Playing) ? images.play: images.pause)} 
+              style={ApplicationStyles.iconCardMusic} /> 
+            </TouchableOpacity>
+
+            {(currentTrack === (musicList.count -1))?
+              <View style={ApplicationStyles.icon} /> :
+              <TouchableOpacity activeOpacity={0.6} onPress={() => TrackPlayer.skipToNext()}>
                 <Image source={images.next} style={ApplicationStyles.icon} /> 
-                </TouchableOpacity>
-              }
-              
-          </View>) : null )
-          // (<View style={ApplicationStyles.playMusic}>
-          //   <View style={ApplicationStyles.boxImage}/>
-          //   <View style={ApplicationStyles.description}>
-          //     <Text style={Font.style.description}>Not Playing</Text>
-          //   </View>
-          //   <TouchableOpacity activeOpacity={0.6}>
-          //     <Image source={images.previous} style={ApplicationStyles.icon} /> 
-          //   </TouchableOpacity>
-          //   <TouchableOpacity activeOpacity={0.6}>
-          //     <Image source={images.pause} style={ApplicationStyles.iconCardMusic} /> 
-          //   </TouchableOpacity>
-          //   <TouchableOpacity activeOpacity={0.6} >
-          //     <Image source={images.next} style={ApplicationStyles.icon} /> 
-          //   </TouchableOpacity>
-          // </View>))
-          
-          : null}
+              </TouchableOpacity>
+            }
+
+          </View>) 
+        : null )
+      : null}
     </View>
   );
 };

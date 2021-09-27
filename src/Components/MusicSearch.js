@@ -14,7 +14,6 @@ class Search extends PureComponent {
       query: '',
     }
   }
-
   
   cancel(){
     Keyboard.dismiss();
@@ -22,7 +21,6 @@ class Search extends PureComponent {
       query: '',
     });
   }
-
   
   onSearchMusic(text){
     const {music, searchMusic} = this.props;
@@ -34,12 +32,12 @@ class Search extends PureComponent {
     debouncedSave();
   }
 
+  //hide music card
   searchMusic = async() =>{
     const {setVisibility} = this.props;
     setVisibility();
     await TrackPlayer.stop();
   }
-
 
   render() {
     return (
