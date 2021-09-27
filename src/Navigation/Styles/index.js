@@ -75,7 +75,7 @@ const DefaultOptions = {
     barStyle: 'black', // Optional (default, black)
     backgroundColor: 'white', // Optional
     translucent: true, // Optional, IOs only
-    currentTabIndex: 1, // Optional
+    currentTabIndex: 4, // Optional
     drawBehind: false, // Optional
     elevation: 2, // Optional, Android only
     hideShadow: true, // Optional, IOs only

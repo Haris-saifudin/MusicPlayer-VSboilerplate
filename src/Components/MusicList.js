@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import SampleActions, { SampleSelectors } from '../Redux/SampleRedux';
 import ApplicationStyles from '../Themes/ApplicationStyles';
 import TrackPlayer, {Capability} from 'react-native-track-player';
+import { throttle, debounce } from 'lodash';
 
 class MusicList extends PureComponent {
   constructor(props){
@@ -13,36 +14,45 @@ class MusicList extends PureComponent {
       query: '',
       tabBar:{
         artist: true,
-        album: false
-      }
+        album: false,
+        
+      },
+      data: true
     })
   }
   
 
   onSelectMusic = async(item, index) =>{
     const {selectMusic, musicList, setVisibility} = this.props;
+    console.log('[onSelectMusic] ', index);
+
     this.setState({
       query: '',
       updatePlayList: true,
+     
     });
     selectMusic(item);
     await TrackPlayer.skip(index);
     await TrackPlayer.play()
-    let prev = 0; 
-    // const throttle = async() =>{
-    //   let now = new Date().getTime();
-    //   console.log(now-prev); 
-    //   if(now - prev > 200){ 
-    //     prev = now;
-    //   }
-    // }
-    // throttle;
+  }
+
+  _throttle = (item, index) =>{
+    // console.log('[throttle] ', index);
+    // console.log('[throttle] ', this.state.data);
+   
+    // const throttling = throttle(() => this.onSelectMusic(item, index), 1000);
+    const _debounce = debounce(() => this.setState({data: true}), 1000);
+    _debounce();
+    if(this.state.data){
+      this.onSelectMusic(item, index);
+      this.setState({data: false})
+    }
   }
 
   
   renderItem = (item, index) =>{
     return(
-      <TouchableOpacity activeOpacity={0.8} onPress={ () => this.onSelectMusic(item, index)}>
+      <TouchableOpacity activeOpacity={0.8} onPress={ () => this._throttle(item, index)}>
         <View style={ApplicationStyles.card}>
           <FastImage style={ApplicationStyles.image60} 
             source={{
@@ -189,7 +199,11 @@ export const UpdatePlayList = async (musicList, count, search) => {
       Capability.SkipToPrevious,
       Capability.Stop,
     ],
-    compactCapabilities: [Capability.Play, Capability.Pause],
+    compactCapabilities: [Capability.Play, 
+      Capability.Pause,  
+      Capability.SkipToNext,
+      Capability.SkipToPrevious,
+      Capability.Stop,],
   });
   // await TrackPlayer.setRepeatMode(RepeatMode.Queue);
   const queue = await TrackPlayer.getQueue();

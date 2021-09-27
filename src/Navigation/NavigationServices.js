@@ -30,14 +30,6 @@ function setRootAuth() {
             }
           }
         ],
-        options:{
-          statusBar:{
-            visible: true, // Optional
-            style: 'dark', // Optional ('light', 'dark')
-            backgroundColor: '#000000', // Optional, Android only
-          }
-        }
-
       }
     }
   });
