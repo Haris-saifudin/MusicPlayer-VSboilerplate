@@ -5,11 +5,9 @@ import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
 import ApplicationStyles from '../../Themes/ApplicationStyles';
 import Search from '../../Components/MusicSearch';
 import MusicCard from '../../Components/MusicCard';
-import MusicList from '../../Components/MusicList';
+import MusicList from '../../Components/Music/MusicList';
 import { SessionSelectors } from '../../Redux/SessionRedux';
-import TrackPlayer, {Capability} from 'react-native-track-player';
 import { UpdatePlayList } from '../../Components/MusicList';
-import NavigationMusic from '../../Components/NavigationMusic';
 
 class SearchScreen extends PureComponent {
   constructor(props){
@@ -32,15 +30,11 @@ class SearchScreen extends PureComponent {
 
   render() {
     const {payload} = this.props;
+    console.log("[search screen]");
     return (
       <View style={ApplicationStyles.containerSearch}>
         <Search />
-        {(payload.error)? null : 
-          <>
-              <NavigationMusic/>
-              <MusicList/>
-          </>
-        }
+        {(payload.error)? null : <MusicList/>}
         <MusicCard/>
       </View>
     );
