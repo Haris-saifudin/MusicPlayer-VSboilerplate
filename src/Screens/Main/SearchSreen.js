@@ -10,14 +10,14 @@ import { SessionSelectors } from '../../Redux/SessionRedux';
 import { UpdatePlayList } from '../../Components/Music/MusicManager';
 class SearchScreen extends PureComponent {
 
-  componentDidMount(){
-   this.updateMusic()
-  }
+  // componentDidMount(){
+  //  this.updateMusic()
+  // }
 
-  updateMusic = () =>{
-    const {musicList} = this.props;
-    UpdatePlayList(musicList.data, musicList.count);
-  }
+  // updateMusic = () =>{
+  //   const {musicList} = this.props;
+  //   UpdatePlayList(musicList.song, musicList.count);
+  // }
 
   render() {
     const {payload, musicList} = this.props;

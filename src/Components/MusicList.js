@@ -75,7 +75,7 @@ class MusicList extends PureComponent {
     return (
       <View style={{flex: 1}}>      
         <FlatList 
-          data={(navMusic.song) ? musicList.data : musicList.album}
+          data={(navMusic.song) ? musicList.song : musicList.album}
           keyExtractor={item => (navMusic.song) ? 
             item.trackId.toString(): item.collectionId.toString()
           }
@@ -113,40 +113,5 @@ const mapDispatchToProps = (dispatch) => {
     setVisibility: () => dispatch(SampleActions.actionVisibility()),
   };
 };
-
-// update play list
-export const UpdatePlayList = async (musicList, count, search) => {
-  await TrackPlayer.reset();
-  await TrackPlayer.setupPlayer();
-  let  playlist = [];
-  for ( var index = 0; index < count; index++){
-    playlist.push({
-        url: musicList[index].previewUrl,
-        title: musicList[index].trackCensoredName,
-        artist: musicList[index].artistName,
-        artwork: musicList[index].artworkUrl60,
-    });
-  }
-  await TrackPlayer.add(playlist);
-  await TrackPlayer.stop();
-  await TrackPlayer.updateOptions({
-    stopWithApp: true,
-    capabilities: [
-      Capability.Play,
-      Capability.Pause,
-      Capability.SkipToNext,
-      Capability.SkipToPrevious,
-      Capability.Stop,
-    ],
-    compactCapabilities: [
-      Capability.Play, 
-      Capability.Pause,  
-      Capability.SkipToNext,
-      Capability.SkipToPrevious,
-      Capability.Stop,],
-  });
-  console.log('[update music list]', search);
-};
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(MusicList);

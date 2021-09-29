@@ -8,19 +8,11 @@ import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
 
-export const UpdatePlayList = async (musicList, count) => {
+export const UpdatePlayList = async (musicList, count, type) => {
   await TrackPlayer.reset();
   await TrackPlayer.setupPlayer();
-  let  playlist = [];
-  for ( var index = 0; index < count; index++){
-    playlist.push({
-        url: musicList[index].previewUrl,
-        title: musicList[index].trackCensoredName,
-        artist: musicList[index].artistName,
-        artwork: musicList[index].artworkUrl60,
-    });
-  }
-  await TrackPlayer.add(playlist);
+  await TrackPlayer.add(musicList);
+
   await TrackPlayer.stop();
   await TrackPlayer.updateOptions({
     stopWithApp: true,

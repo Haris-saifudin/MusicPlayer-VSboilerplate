@@ -12,7 +12,6 @@ const {Types, Creators} = createActions({
   actionPlayMusic: ['status'],
   actionSelectMusic: ['params'],
   actionVisibility: null,
-  actionNavBarMusic: ['navbar'],
   actionAddToLibrary: ['library'],
   actionDeleteLibrary: ['index', 'item'],
 });
@@ -34,10 +33,6 @@ export const INITIAL_STATE = {
   onPlayMusic:[],
   search: undefined,
   visibility: true,
-  nav: {
-    song: true,
-    album: false
-  },
   library: null,
   countLibrary: 0
 };
@@ -52,7 +47,6 @@ export const SampleSelectors = {
   getOnPlayMusic: (state) => state.sample.onPlayMusic,
   searchAction: (state) => state.sample.search,
   getVisibility: (state) => state.sample.visibility,
-  getNavMusic: (state) => state.sample.nav,
   getLibrary: (state) => state.sample.library,
   getCountLibrary: (state) => state.sample.countLibrary,
 };
@@ -100,27 +94,6 @@ export const actionPlayMusicReducer = (state, {status}) => {
   };
 };
 
-export const actionNavBarMusicReducer = (state, {navbar}) => {
-  if(navbar === 'song'){
-    return {
-      ...state,
-      nav:{
-        song: true,
-        album: false
-      }
-    };
-  }
-  else{
-    return {
-      ...state,
-      nav:{
-        song: false,
-        album: true
-      }
-    };
-  }
-};
-
 export const actionSelectMusicReducer = (state, {params}) => {
   return {
     ...state,
@@ -155,35 +128,36 @@ export const resetReducer = (state) => {
 
 
 export const actionAddToLibraryReducer = (state, {library}) => {
-  if(state.library !== null){
-    const temporary = state.library;
-    temporary.push({data : library, love: true});
-    // console.log("[add] ",state.library);
-    return {
-      ...state,
-      library: temporary,
-      countLibrary: state.countLibrary + 1,
-    };
-  }
-  else{
-    return{
-      ...state,
-      library: [{data: library, love: true}],
-      countLibrary: state.countLibrary + 1,
-    }
+
+  // let temp = [];
+  // for(var index = 0; index <= state.countLibrary; index++){
+  //   if(index === state.countLibrary){
+  //     temp.push({
+  //       data: library,
+  //       love: true
+  //     })
+  //   }
+  //   else{
+  //     temp.push({
+  //       data: state.library[index].data,
+  //       love: true
+  //     })
+  //   }
+  // }
+
+  return{
+    ...state,
+    library: library,
+    countLibrary: state.countLibrary + 1
   }
 
 };
 
 export const actionDeleteLibraryReducer = (state, {index, item}) => {
-  const  deleteLibrary = state.library;
-  deleteLibrary.splice(index, 1, item);
-  // console.log("[delete] ", state.library);
-
   return {
     ...state,
     countLibrary: state.countLibrary -1,
-    library: deleteLibrary
+    library: item,
   };
 };
 
@@ -197,7 +171,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.ACTION_SELECT_MUSIC]: actionSelectMusicReducer,
   [Types.ACTION_SEARCH_MUSIC]: actionSearchMusicReducer,
   [Types.ACTION_VISIBILITY]: actionVisibilityReducer,
-  [Types.ACTION_NAV_BAR_MUSIC]: actionNavBarMusicReducer,
   [Types.ACTION_ADD_TO_LIBRARY]: actionAddToLibraryReducer,
   [Types.ACTION_DELETE_LIBRARY]: actionDeleteLibraryReducer,
   [Types.RESET]: resetReducer,

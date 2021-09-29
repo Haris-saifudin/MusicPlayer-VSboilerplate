@@ -44,7 +44,7 @@ const ApplicationStyles = StyleSheet.create({
     flex: 1, 
     flexDirection: 'row', 
     paddingVertical: 10, 
-    marginHorizontal: 16,
+    // marginHorizontal: 16,
     borderBottomColor: "#ececec",
     borderBottomWidth: 2
   },

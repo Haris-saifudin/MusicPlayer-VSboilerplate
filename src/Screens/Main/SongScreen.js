@@ -17,37 +17,77 @@ class SongScreen extends PureComponent {
   }
 
   checkLibrary = false;
+  
+  updateLibrary (item){
+   let playlist = [{
+      trackId: item.trackId,
+      artworkUrl60: item.artworkUrl60,
+      trackCensoredName: item.trackCensoredName,
+      collectionName: item.collectionCensoredName,
+      kind: item.kind,
+      previewUrl: item.previewUrl,
+      url: item.previewUrl,
+      title: item.trackCensoredName,
+      artist: item.artistName,
+      artwork: item.artworkUrl30,
+      like: true,
+    }]
+    return playlist;
+  }
+
+  pushLibrary (item){
+    let playlist = {
+       trackId: item.trackId,
+       artworkUrl60: item.artworkUrl60,
+       trackCensoredName: item.trackCensoredName,
+       collectionName: item.collectionCensoredName,
+       kind: item.kind,
+       previewUrl: item.previewUrl,
+       url: item.previewUrl,
+       title: item.trackCensoredName,
+       artist: item.artistName,
+       artwork: item.artworkUrl30,
+       like: true,
+     }
+     return playlist;
+   }
 
   toggleLove = (item) =>{
     const {getLibrary, addToLibrary, getCountLibrary, deleteLibrary} = this.props;
-    for(var index = 0; index < getCountLibrary; index++){
-      if(item.trackId === getLibrary[index].data.trackId){
-        console.log('duplicate');
-        this.checkLibrary = true;  
-        let replace= {
-          data: item,
-          love: false
+    
+    if(getCountLibrary === 0 || getLibrary === null ){
+      addToLibrary(this.updateLibrary(item));
+      console.log("[playlist]", this.updateLibrary(item));
+    }
+    else{
+      for(var index = 0; index < getCountLibrary; index++){
+        if(item.trackId === getLibrary[index].trackId){
+          console.log('[unlike]');
+          this.checkLibrary = true;  
+          let temp = [...getLibrary];
+          temp.splice(index, 1);
+          deleteLibrary(index, temp);
+          break;
         }
-        deleteLibrary(index,replace);
-        break;
-      }{
-        console.log('nothing');
-        this.checkLibrary = false;        
+        else{
+          console.log('nothing');
+          this.checkLibrary = false;        
+        }
+      }
+
+      if(this.checkLibrary === false){
+          let pinSongToLibrary =[...getLibrary];
+          pinSongToLibrary.push(this.pushLibrary(item));
+          addToLibrary(pinSongToLibrary);
+          console.log("[item]",pinSongToLibrary);
       }
     }
-
-    if(this.checkLibrary === false){
-      addToLibrary(item);
-    }
-
-    console.log(getCountLibrary);
+    console.log('[lib]', getCountLibrary);
   }
 
   renderItemSong = ({item, index}) =>{
     const {getLibrary} = this.props;
-    // console.log("[toggle love]", getLibrary);
-
-    // console.log(getLibrary[1].love);
+    // console.log("[getLibrary]",getLibrary);
     return(
       <TouchableOpacity activeOpacity={0.8} onPress={ () => this.selectMusic(item, index)}>
         <View style={ApplicationStyles.card}>
@@ -65,8 +105,7 @@ class SongScreen extends PureComponent {
           <TouchableOpacity activeOpacity={0.8} onPress={ () => this.toggleLove(item)}
             style={{marginLeft: 4, flexDirection: 'column', justifyContent: 'center'}}
           >
-            {/* <Image style={{height: 20, width: 20}} source={(getLibrary[index].love)? images.love:images.unlove} /> */}
-            <Image style={{height: 20, width: 20}} source={images.unlove} />
+            <Image style={{height: 20, width: 20, marginRight: 12}} source={(item.like)?images.love:images.unlove} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -75,11 +114,12 @@ class SongScreen extends PureComponent {
 
   render() {
     const {musicList} = this.props;
+    // console.log("[Music List]",musicList);
     const ITEM_HEIGHT = 66;
     return (
       <View style={{flex: 1}}>      
         <FlatList 
-          data={musicList.data}
+          data={musicList.song}
           keyExtractor={item => item.trackId.toString() }
           getItemLayout={(data, index) => (
             {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index}
@@ -88,7 +128,6 @@ class SongScreen extends PureComponent {
           windowSize={18}
           renderItem={(item, index) => this.renderItemSong(item, index)}
           // renderItem={(item, index) => (ItemSong(item, index))}
-          
         />
       </View>
     );

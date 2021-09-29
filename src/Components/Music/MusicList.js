@@ -39,7 +39,7 @@ export default function MusicList() {
       onIndexChange={setIndex}
       initialLayout={{ width: layout.width }}
       renderTabBar={renderTabBar}
-      style={{marginHorizontal: 12}}
+      style={{marginHorizontal: 16}}
       lazy
     />
   );

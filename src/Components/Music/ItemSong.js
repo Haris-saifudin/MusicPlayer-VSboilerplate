@@ -8,8 +8,7 @@ import TrackPlayer, {Capability} from 'react-native-track-player';
 import { throttle, debounce } from 'lodash';
 import { onSelectMusic } from './MusicManager';
 
-
-const ItemSong = ({item, index}) =>{
+const ItemSong = ({item, index, SelectMusic}) =>{
   return(
     <TouchableOpacity activeOpacity={0.8} onPress={() => onSelectMusic(index)}>
       <View style={ApplicationStyles.card}>
@@ -28,20 +27,19 @@ const ItemSong = ({item, index}) =>{
     </TouchableOpacity>
   )
 }
-const mapStateToProps = (state) => {
-  return {
-    playMusic: SampleSelectors.getActiveMusic(state),
-    onPlayMusic: SampleSelectors.getOnPlayMusic(state),
-    visibility: SampleSelectors.getVisibility(state),
-    musicList: SampleSelectors.getMusicList(state),
-  }
-};
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    music: (status) => dispatch(SampleActions.actionPlayMusic(status)),
-    selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
-  };
-};
+export default ItemSong
+// const mapStateToProps = (state) => {
+//   return {
+//     visibility: SampleSelectors.getVisibility(state),
+//   }
+// };
 
-export default ItemSong;
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
+//   };
+// };
+
+// export default connect(mapStateToProps, mapDispatchToProps)(RenderSongItem);
+
