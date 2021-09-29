@@ -23,8 +23,8 @@ class App extends PureComponent {
       const { startup } = this.props;
       startup();
     }
-    this.requestUserPermission()
-    this.FCMInit()
+    // this.requestUserPermission()
+    // this.FCMInit()
   }
 
   requestUserPermission = async () => {

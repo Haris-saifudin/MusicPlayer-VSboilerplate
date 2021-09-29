@@ -6,7 +6,7 @@ import ApplicationStyles from '../../Themes/ApplicationStyles';
 
 const ItemAlbum = (item, index) =>{
   return(
-    <TouchableOpacity activeOpacity={0.8}>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => console.log(item)}>
       <View style={ApplicationStyles.card}>
           <FastImage style={ApplicationStyles.imageAlbum} 
             source={{

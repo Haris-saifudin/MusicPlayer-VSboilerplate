@@ -19,7 +19,8 @@ import MusicCard from '../Components/MusicCard';
 import TrackPlayer from 'react-native-track-player';
 import MusicSearch from '../Components/MusicSearch';
 import MusicList from '../Components/MusicList';
-
+import NavigationMusic from '../Components/NavigationMusic';
+import { TabBar } from 'react-native-tab-view';
 
 
 export const NAVIGATION_NAME = {
@@ -45,6 +46,8 @@ export const NAVIGATION_NAME = {
     musicCard: 'component.musicCard',
     musicSeaarch: 'component.musicSearch',
     musicList: 'component.musicList',
+    navMusic: 'component.navmusic',
+    tobTabBar: 'component.topTabBar'
   }
 };
 
@@ -77,9 +80,17 @@ export default function () {
   );
   Navigation.registerComponent(NAVIGATION_NAME.COMPONENTS.musicSeaarch, () =>
     ReduxWrapper(MusicSearch)
-  );  Navigation.registerComponent(NAVIGATION_NAME.COMPONENTS.musicList, () =>
+  );  
+  Navigation.registerComponent(NAVIGATION_NAME.COMPONENTS.musicList, () =>
     ReduxWrapper(MusicList)
   );
+  Navigation.registerComponent(NAVIGATION_NAME.COMPONENTS.navMusic, () =>
+    ReduxWrapper(NavigationMusic)
+  );
+  Navigation.registerComponent(NAVIGATION_NAME.COMPONENTS.tobTabBar, () =>
+    ReduxWrapper(TabBar)
+  );
+
 
   Navigation.registerComponent(NAVIGATION_NAME.AUTH.onboard, () =>
     ReduxWrapper(OnboardScreen)

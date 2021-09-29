@@ -6,22 +6,8 @@ import SampleActions, { SampleSelectors } from '../Redux/SampleRedux';
 import ApplicationStyles from '../Themes/ApplicationStyles';
 import TrackPlayer, {Capability} from 'react-native-track-player';
 import { throttle, debounce } from 'lodash';
-
 class MusicList extends PureComponent {
-  constructor(props){
-    super(props);
-    this.state = ({
-      query: '',
-      tabBar:{
-        song: true,
-        album: false,
-      },
-      data: true
-    })
-  }
-  
-
-  onSelectMusic = async(item, index) =>{
+   onSelectMusic = async(item, index) =>{
     const {selectMusic} = this.props;
     this.setState({
       query: '',
@@ -85,7 +71,7 @@ class MusicList extends PureComponent {
   render() {
     const {musicList, navMusic} = this.props;
     const ITEM_HEIGHT = 66;
-    console.log("[search screen]");
+    const type = 'song';
     return (
       <View style={{flex: 1}}>      
         <FlatList 
@@ -99,8 +85,8 @@ class MusicList extends PureComponent {
           maxToRenderPerBatch={7}
           windowSize={18}
           renderItem={({item, index}) => ((navMusic.song) ? 
-          this.renderItem(item, index): this.renderItemAlbum(item, index))
-        }  
+            this.renderItem(item, index): this.renderItemAlbum(item, index))
+          }
         />
       </View>
     );
@@ -152,17 +138,13 @@ export const UpdatePlayList = async (musicList, count, search) => {
       Capability.SkipToPrevious,
       Capability.Stop,
     ],
-    compactCapabilities: [Capability.Play, 
+    compactCapabilities: [
+      Capability.Play, 
       Capability.Pause,  
       Capability.SkipToNext,
       Capability.SkipToPrevious,
       Capability.Stop,],
   });
-  // await TrackPlayer.setRepeatMode(RepeatMode.Queue);
-  // const queue = await TrackPlayer.getQueue();
-  // if(queue){
-  //   console.log('[add playlist]');
-  // }
   console.log('[update music list]', search);
 };
 

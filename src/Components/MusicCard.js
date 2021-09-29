@@ -22,7 +22,7 @@ import SampleActions, { SampleSelectors } from '../Redux/SampleRedux';
 import ApplicationStyles from '../Themes/ApplicationStyles';
 import Font from '../Themes/Fonts';
 import images from '../Themes/Images';
-
+import {PlayingMusic, PreviousMusic, ForwardMusic} from './Music/MusicManager';
 
 
 
@@ -48,19 +48,11 @@ const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic}) => {
     }
   });
 
-  //toggle play and pause music
-  const playingMusic = async() =>{
-    if (playbackState === State.Paused) {
-      await TrackPlayer.play();
-    } else {
-      await TrackPlayer.pause();
-    }
-  }
-
   useEffect(() => {
     selectMusic(false);
   }, []);
 
+  // console.log("[music card]", playbackState);
   return (
     <View>
       {(visibility)?
@@ -77,20 +69,20 @@ const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic}) => {
             </View>
 
             {(currentTrack !== 0) ? 
-              (<TouchableOpacity activeOpacity={0.6} onPress={() => TrackPlayer.skipToPrevious()}>
+              (<TouchableOpacity activeOpacity={0.6} onPress={() => PreviousMusic()}>
                 <Image source={images.previous} style={ApplicationStyles.icon} /> 
               </TouchableOpacity>)
               : null
             }
 
-            <TouchableOpacity activeOpacity={0.6}  onPress={() => playingMusic()}>
+            <TouchableOpacity activeOpacity={0.6}  onPress={() => PlayingMusic(playbackState)}>
               <Image source={(playbackState === State.Stopped)? images.pause : ((playbackState === State.Playing) ? images.play: images.pause)} 
               style={ApplicationStyles.iconCardMusic} /> 
             </TouchableOpacity>
 
             {(currentTrack === (musicList.count -1))?
               <View style={ApplicationStyles.icon} /> :
-              <TouchableOpacity activeOpacity={0.6} onPress={() => TrackPlayer.skipToNext()}>
+              <TouchableOpacity activeOpacity={0.6} onPress={() => ForwardMusic()}>
                 <Image source={images.next} style={ApplicationStyles.icon} /> 
               </TouchableOpacity>
             }

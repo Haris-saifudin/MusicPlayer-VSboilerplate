@@ -128,6 +128,8 @@ const ApplicationStyles = StyleSheet.create({
   defaultTabBar:{
     width: windowWidth/2-16, 
     paddingBottom: 8, 
+    borderBottomColor: 'grey',
+    borderBottomWidth: 1
   },
   activeTextTabBar:{
     fontFamily: Font.type.bold,

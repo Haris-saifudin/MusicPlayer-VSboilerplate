@@ -8,27 +8,25 @@ import TrackPlayer from 'react-native-track-player';
 import { debounce } from 'lodash';
 
 class Search extends PureComponent {
+  searchQuery = "";
+
   constructor(props){
     super(props);
-    this.state = {
-      query: '',
-    }
   }
   
   cancel(){
     Keyboard.dismiss();
-    this.setState({
-      query: '',
-    });
+    if(this.textInput){
+      this.textInput.clear();
+    }
+    this.searchQuery = '';
   }
   
   onSearchMusic(text){
     const {music, searchMusic} = this.props;
-    this.setState({
-      query: text,
-    });
+    this.searchQuery = text;
     music(false);
-    const debouncedSave = debounce(() => searchMusic(this.state.query), 500);
+    const debouncedSave = debounce(() => searchMusic(this.searchQuery), 500);
     debouncedSave();
   }
 
@@ -44,10 +42,10 @@ class Search extends PureComponent {
         <View style={ApplicationStyles.container}>
           <View style={ApplicationStyles.topBar}>
             <TextInput
+              ref={r => this.textInput = r}
               style={ApplicationStyles.textInput}
               placeholder={"search in apple music"}
               onChangeText={(text) => this.onSearchMusic(text)}
-              value={this.state.query}
               onFocus={() =>this.searchMusic()}
             />
             <TouchableOpacity  activeOpacity={0.8} onPress={() => this.cancel()} style={{width: 60, alignContent: 'center', alignItems: 'center'}}>

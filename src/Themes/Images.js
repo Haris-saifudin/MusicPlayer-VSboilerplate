@@ -2,8 +2,6 @@
 // leave off @2x/@3x
 const images = {
   // register logo here
-  icon: require('../Images/icon.png'),
-  icon: require('../Images/icon.png'),
   play: require('../Images/play.png'),
   pause: require('../Images/pause.png'),
   search: require('../Images/search.png'),
@@ -13,7 +11,9 @@ const images = {
   browse: require('../Images/browse.png'),
   card: require('../Images/cardItunes.png'),
   next: require('../Images/next.png'),
-  previous: require('../Images/previous.png')
+  previous: require('../Images/previous.png'),
+  love: require('../Images/love.png'),
+  unlove: require('../Images/unlove.png'),
 
 };
 
