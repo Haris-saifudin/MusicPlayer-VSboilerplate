@@ -8,12 +8,20 @@ import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
 
-export const UpdatePlayList = async (musicList, count, type) => {
+export const UpdatePlayList = async (musicList, count, type, index) => {
   await TrackPlayer.reset();
-  await TrackPlayer.setupPlayer();
-  await TrackPlayer.add(musicList);
-
   await TrackPlayer.stop();
+  await TrackPlayer.setupPlayer();
+  
+  if(type === 'update'){
+    await TrackPlayer.add(musicList);
+    
+  }
+  else{
+    await TrackPlayer.add(musicList);
+  }
+
+  console.log("[tye]", type);
   await TrackPlayer.updateOptions({
     stopWithApp: true,
     capabilities: [
@@ -31,11 +39,15 @@ export const UpdatePlayList = async (musicList, count, type) => {
       Capability.Stop,],
   });
   console.log('[update music list]');
+
+  if(type === 'update'){
+    await TrackPlayer.skip(index);
+    await TrackPlayer.play();
+  }
 };
 
 
 export const PlayingMusic = async(param) =>{
-  // const currentTrack = await TrackPlayer.getCurrentTrack();
     console.log('param');
     if (param === 2) { // 3 (play) , 2 (pause)
       await TrackPlayer.play();
@@ -43,8 +55,6 @@ export const PlayingMusic = async(param) =>{
       await TrackPlayer.pause();
     }
 }
-
-// export default PlayingMusic;
 
 export const ForwardMusic = async() =>{
   await TrackPlayer.skipToNext();
@@ -61,36 +71,3 @@ export const onSelectMusic = async(index) =>{
   await TrackPlayer.skip(index);
   await TrackPlayer.play()
 }
-
-// const SelectMusic = ({item, index, selectMusic}) =>{
-//   const onSelectMusic = async(index) =>{
-//     //select playlist
-//     await TrackPlayer.skip(index);
-//     await TrackPlayer.play()
-//   }
-
-//   selectMusic(item);
-//   onSelectMusic(index);
-// }
-
-// const mapStateToProps = (state) => {
-//   // console.tron.error({state});
-//   return {
-//     payload: SampleSelectors.getDataAction(state),
-//     playMusic: SampleSelectors.getActiveMusic(state),
-//     musicList: SampleSelectors.getMusicList(state),
-//     onPlayMusic: SampleSelectors.getOnPlayMusic(state),
-//   }
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     reset: () => dispatch(SampleActions.reset()),
-//     music: (status) => dispatch(SampleActions.actionPlayMusic(status)),
-//     selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
-//     searchMusic: (search) => dispatch(SampleActions.actionSearchMusic(search)),
-
-//   };
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(SelectMusic);
