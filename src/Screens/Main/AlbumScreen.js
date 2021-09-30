@@ -5,8 +5,7 @@ import ApplicationStyles from '../../Themes/ApplicationStyles';
 import {connect} from 'react-redux';
 import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
 import ItemAlbum from '../../Components/Music/ItemAlbum';
-import ItemSong from '../../Components/Music/ItemSong';
-
+import SongItem from '../../Components/Music/SongItem';
 class AlbumScreen extends PureComponent {
 
   ItemAlbum = ({item, index}) =>{

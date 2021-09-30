@@ -14,6 +14,7 @@ const {Types, Creators} = createActions({
   actionVisibility: null,
   actionAddToLibrary: ['library'],
   actionDeleteLibrary: ['index', 'item'],
+  actionSetPlayList : ['list'],
 });
 
 export const SampleTypes = Types;
@@ -30,6 +31,7 @@ export const INITIAL_STATE = {
   },
   musicList: [],
   playMusic: false,
+  playlist: 'music-list',
   onPlayMusic:[],
   search: undefined,
   visibility: true,
@@ -49,6 +51,7 @@ export const SampleSelectors = {
   getVisibility: (state) => state.sample.visibility,
   getLibrary: (state) => state.sample.library,
   getCountLibrary: (state) => state.sample.countLibrary,
+  getPlayList: (state) => state.sample.playlist,
 };
 
 /* ------------- Reducers ------------- */
@@ -73,7 +76,6 @@ export const actionSuccessReducer = (state, {payload}) => {
     musicList: payload,
     playMusic: false,
     onPlayMusic: false,
-    countLibrary: 0
   };
 };
 
@@ -128,23 +130,6 @@ export const resetReducer = (state) => {
 
 
 export const actionAddToLibraryReducer = (state, {library}) => {
-
-  // let temp = [];
-  // for(var index = 0; index <= state.countLibrary; index++){
-  //   if(index === state.countLibrary){
-  //     temp.push({
-  //       data: library,
-  //       love: true
-  //     })
-  //   }
-  //   else{
-  //     temp.push({
-  //       data: state.library[index].data,
-  //       love: true
-  //     })
-  //   }
-  // }
-
   return{
     ...state,
     library: library,
@@ -161,6 +146,13 @@ export const actionDeleteLibraryReducer = (state, {index, item}) => {
   };
 };
 
+
+export const actionSetPlayListReducer = (state, {list}) => {
+  return {
+    ...state,
+    playlist: list
+  };
+};
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -174,4 +166,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.ACTION_ADD_TO_LIBRARY]: actionAddToLibraryReducer,
   [Types.ACTION_DELETE_LIBRARY]: actionDeleteLibraryReducer,
   [Types.RESET]: resetReducer,
+  [Types.ACTION_SET_PLAY_LIST]: actionSetPlayListReducer,
 });

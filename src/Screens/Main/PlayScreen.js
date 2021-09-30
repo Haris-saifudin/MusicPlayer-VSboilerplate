@@ -6,6 +6,7 @@ import ApplicationStyles from '../../Themes/ApplicationStyles';
 import NavigationServices from '../../Navigation/NavigationServices';
 import {NAVIGATION_NAME} from '../../Navigation/RegisterComponent';
 import MusicCard from '../../Components/MusicCard';
+import ItemSong from '../../Components/Music/SongItem';
 
 class PlayScreen extends PureComponent {
 

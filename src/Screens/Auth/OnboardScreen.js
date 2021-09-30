@@ -12,9 +12,7 @@ import images from '../../Themes/Images';
 class OnboardScreen extends PureComponent {
   constructor(props) {
     super(props);
-
     this.navigateToMain = this.navigateToMain.bind(this);
-    this.navigateToRegister = this.navigateToRegister.bind(this);
   }
 
   navigateToMain() {
@@ -22,33 +20,16 @@ class OnboardScreen extends PureComponent {
     sampleRequst();
     session(true);
   }
-
-  navigateToRegister() {
-    NavigationServices.push(
-      NAVIGATION_NAME.AUTH.register,
-      {
-        // passing parameter
-        fromLogin: true
-      },
-      {
-        // passing option
-        topBar: {
-          title: {
-            text: 'Register'
-          }
-        }
-      }
-    );
-  }
-
   render() {
     return (
       <View style={ApplicationStyles.containerOnboard}>
         <View style={{width: 360}}>
-          <Text style={ApplicationStyles.titleOnBoard}>Listen Now</Text>
+          <Text style={ApplicationStyles.titleOnBoard}>Find you favorite music now</Text>
         </View>
-        <TouchableOpacity activeOpacity={0.8}  onPress={this.navigateToMain}>
-          <Image style={ApplicationStyles.cardImages} source={images.card}/>
+        <TouchableOpacity activeOpacity={0.8}  onPress={this.navigateToMain} 
+        style={ApplicationStyles.button}>
+          {/* <Image style={ApplicationStyles.cardImages} source={images.card}/> */}
+          <Text style={ApplicationStyles.fontButton}>Get started</Text>
         </TouchableOpacity>
       </View>
     );

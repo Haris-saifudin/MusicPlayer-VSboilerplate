@@ -6,6 +6,7 @@ import SessionActions from '../../Redux/SessionRedux';
 import ApplicationStyles from '../../Themes/ApplicationStyles';
 import MusicCard from '../../Components/MusicCard';
 import TrackPlayer from 'react-native-track-player';
+import images from '../../Themes/Images';
 
 class BrowseScreen extends PureComponent {
   
@@ -20,8 +21,21 @@ class BrowseScreen extends PureComponent {
   render() {
     return (
       <View style={ApplicationStyles.containerApp}>
-        <View style={ApplicationStyles.containerCenter}>
-          <Button title="RESET" onPress={() => this.logOut()} />
+        <View style={{flex: 1, marginTop: 30, alignItems: 'flex-end', paddingHorizontal: 16}}>
+          {/* <Button title="RESET" onPress={() => this.logOut()} /> */}
+          <TouchableOpacity activeOpacity={0.8}  onPress={() => this.logOut()}
+            style={
+              {height: 40,
+              width: 120, 
+              borderRadius: 20,
+              backgroundColor: '#2d72cb',
+              flexDirection: 'row',
+              alignItems: 'center', 
+              justifyContent: 'center'}
+            } >
+            <Image style={{width: 18, height: 18, marginRight: 10}} source={images.logout} />
+            <Text style={[ApplicationStyles.titleOnBoard, {fontSize: 18, color: 'white'}]}>Logout</Text>
+          </TouchableOpacity>
         </View>
         <MusicCard/>
       </View>

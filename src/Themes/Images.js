@@ -14,6 +14,7 @@ const images = {
   previous: require('../Images/previous.png'),
   love: require('../Images/love.png'),
   unlove: require('../Images/unlove.png'),
+  logout: require('../Images/logout.png'),
 
 };
 

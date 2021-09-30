@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {View } from 'react-native';
+import {View, Text } from 'react-native';
 import {connect} from 'react-redux';
 import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
 import ApplicationStyles from '../../Themes/ApplicationStyles';
@@ -10,21 +10,20 @@ import { SessionSelectors } from '../../Redux/SessionRedux';
 import { UpdatePlayList } from '../../Components/Music/MusicManager';
 class SearchScreen extends PureComponent {
 
-  // componentDidMount(){
-  //  this.updateMusic()
-  // }
-
-  // updateMusic = () =>{
-  //   const {musicList} = this.props;
-  //   UpdatePlayList(musicList.song, musicList.count);
-  // }
-
   render() {
     const {payload, musicList} = this.props;
     return (
       <View style={ApplicationStyles.containerSearch}>
         <Search />
-        {(payload.error)? null : <MusicList />}
+        {(payload.error)? null : 
+          ((payload.payload)? <MusicList/> : 
+            <View style={{flex: 1}}>
+              <View style={{height: 30, height: 30, marginTop: 10,}}>
+                <Text style={{textAlign: 'center', fontSize: 16}}>Type something on the search bar...</Text>
+              </View>
+            </View>
+          )
+        }
         <MusicCard/>
       </View>
     );

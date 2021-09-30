@@ -86,8 +86,9 @@ const ApplicationStyles = StyleSheet.create({
   },
   titleOnBoard:{
     fontFamily: Font.type.bold,
-    fontSize: Font.size.h2, 
-    fontWeight: 'bold'
+    fontSize: 26, 
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
   playMusic:{
     // position: 'absolute',
@@ -159,7 +160,23 @@ const ApplicationStyles = StyleSheet.create({
     width: 40, 
     height: 40, 
     borderRadius: 6
-  }  
+  },
+  button:{
+    backgroundColor: "#2d72cb", 
+    width: 350, 
+    height: 45, 
+    marginTop: 20,
+    alignItems: 'center', 
+    flexDirection: 'column', 
+    justifyContent: 'center',
+    borderRadius: 20
+  },
+  fontButton:{
+    fontSize: 20, 
+    fontWeight: 'bold', 
+    color: 'white', 
+    textAlign:'center'
+  }
 });
 
 export default ApplicationStyles;
