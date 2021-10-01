@@ -26,7 +26,7 @@ class Search extends PureComponent {
     const {music, searchMusic} = this.props;
     this.searchQuery = text;
     music(false);
-    const debouncedSave = debounce(() => searchMusic(this.searchQuery), 500);
+    const debouncedSave = debounce(() => searchMusic(this.searchQuery), 1000);
     debouncedSave();
   }
 
@@ -49,7 +49,7 @@ class Search extends PureComponent {
               onFocus={() =>this.searchMusic()}
             />
             <TouchableOpacity  activeOpacity={0.8} onPress={() => this.cancel()} style={{width: 60, alignContent: 'center', alignItems: 'center'}}>
-              <Text style={Font.style.normal, {color: '#FF0000'}}>Cancel</Text>
+              <Text style={[Font.style.normal, {color: 'red', fontWeight: 'bold'}]}>Cancel</Text>
             </TouchableOpacity>
           </View>
         </View>

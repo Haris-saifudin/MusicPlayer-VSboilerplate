@@ -1,6 +1,6 @@
 import {call, put} from 'redux-saga/effects';
 import {path} from 'ramda';
-import SampleActions from '../Redux/SampleRedux';
+import SampleActions, { SampleSelectors } from '../Redux/SampleRedux';
 import {Alert} from 'react-native';
 import NavigationServices from '../Navigation/NavigationServices';
 import { UpdatePlayList } from '../Components/Music/MusicManager';
@@ -17,10 +17,10 @@ export function* SearchAction(api, {search}) {
   try {
     const response = yield call(api.searchMusic, "song", search);
     const albumApiResponse = yield call(api.searchMusic,"album" , search);
+
     // if (response.ok) {
     if (response.ok) {
       if(albumApiResponse.ok){
-
         let playlist = [];
         for(var index = 0; index< response.data.resultCount; index++){
           playlist.push({

@@ -13,8 +13,9 @@ const {Types, Creators} = createActions({
   actionSelectMusic: ['params'],
   actionVisibility: null,
   actionAddToLibrary: ['library'],
-  actionDeleteLibrary: ['index', 'item'],
+  actionDeleteLibrary: ['item'],
   actionSetPlayList : ['list'],
+  actionSetLove: ['love']
 });
 
 export const SampleTypes = Types;
@@ -130,18 +131,36 @@ export const resetReducer = (state) => {
 
 
 export const actionAddToLibraryReducer = (state, {library}) => {
+  // if(state.countLibrary < 0){
+  //   count = 0;
+  // }
+  // else{
+  //   count = state.countLibrary + 1
+  // }
   return{
     ...state,
-    library: library,
-    countLibrary: state.countLibrary + 1
+    library,
+    // countLibrary: count
   }
 
 };
 
-export const actionDeleteLibraryReducer = (state, {index, item}) => {
+export const actionDeleteLibraryReducer = (state, {item}) => {
+  // let count;
+  // let data;
+  // if(state.countLibrary -1 < 0){
+  //   count = 0;
+  //   data = [];
+  // }
+  // else{
+  //   count = state.countLibrary -1;
+  //   data = item
+  // }
+
+  // console.log("action delete....");
   return {
     ...state,
-    countLibrary: state.countLibrary -1,
+    // countLibrary: count,
     library: item,
   };
 };
@@ -153,7 +172,18 @@ export const actionSetPlayListReducer = (state, {list}) => {
     playlist: list
   };
 };
+
+export const actionSetLoveReducer = (state, {love}) => {
+  return {
+    ...state,
+    musicList:{
+      ...state.musicList,
+      song: love
+    },
+  };
+};
 /* ------------- Hookup Reducers To Types ------------- */
+
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.ACTION_REQUEST]: actionRequestReducer,
@@ -167,4 +197,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.ACTION_DELETE_LIBRARY]: actionDeleteLibraryReducer,
   [Types.RESET]: resetReducer,
   [Types.ACTION_SET_PLAY_LIST]: actionSetPlayListReducer,
+  [Types.ACTION_SET_LOVE]: actionSetLoveReducer,
 });

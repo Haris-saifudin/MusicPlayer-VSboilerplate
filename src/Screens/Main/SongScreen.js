@@ -11,7 +11,6 @@ class SongScreen extends PureComponent {
 
     render() {
     const {musicList} = this.props;
-    // console.log("[Music List]",musicList);
     const ITEM_HEIGHT = 66;
     return (
       <View style={{flex: 1}}>      

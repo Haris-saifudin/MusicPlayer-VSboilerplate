@@ -28,13 +28,13 @@ class BrowseScreen extends PureComponent {
               {height: 40,
               width: 120, 
               borderRadius: 20,
-              backgroundColor: '#2d72cb',
+              backgroundColor: 'red',
               flexDirection: 'row',
               alignItems: 'center', 
               justifyContent: 'center'}
             } >
             <Image style={{width: 18, height: 18, marginRight: 10}} source={images.logout} />
-            <Text style={[ApplicationStyles.titleOnBoard, {fontSize: 18, color: 'white'}]}>Logout</Text>
+            <Text style={[ApplicationStyles.titleOnBoard, {fontSize: 18, color: 'white'}]}>Sign Out</Text>
           </TouchableOpacity>
         </View>
         <MusicCard/>

@@ -13,7 +13,8 @@ import { UpdatePlayList , onSelectMusic} from '../../Components/Music/MusicManag
 class LibraryScreen extends PureComponent {
 
   render() {
-    const {getLibrary} = this.props;
+    const {getLibrary, musicList} = this.props;
+    // console.log("[get library]", getLibrary);
     const ITEM_HEIGHT = 66;
     return (
       <View style={ApplicationStyles.containerSearch}>
@@ -28,7 +29,7 @@ class LibraryScreen extends PureComponent {
               )}
               maxToRenderPerBatch={7}
               windowSize={18}
-              renderItem={(item, index) => <SongItem item={item.item} index={item.index} type={'libray-list'} />}
+              renderItem={(item, index) => <SongItem item={item.item} index={item.index} type={'library-list'} />}
               /> : null
           }
         </View>

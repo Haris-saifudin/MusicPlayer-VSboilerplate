@@ -26,12 +26,13 @@ import {PlayingMusic, PreviousMusic, ForwardMusic} from './Music/MusicManager';
 
 
 
-const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic}) => {
+const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic, getPlayList, getLibrary}) => {
   const playbackState = usePlaybackState();
-  const [trackArtwork, setTrackArtwork] = useState();
-  const [trackTitle, setTrackTitle] = useState();
-  const [currentTrack, setCurrentTrack] = useState();
-
+  const [playlist, setPlaylist] = useState({
+    trackArtwork: '',
+    trackTitle: '',
+    currentTrack: '',
+  });
 
   useTrackPlayerEvents([Event.PlaybackTrackChanged], async event => {
     if (
@@ -41,10 +42,12 @@ const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic}) => {
       //get current play
       const track = await TrackPlayer.getTrack(event.nextTrack);
       const currentTrack = await TrackPlayer.getCurrentTrack();
-      const {title, artist, artwork} = track || {};
-      setTrackTitle(title);
-      setTrackArtwork(artwork);
-      setCurrentTrack(currentTrack);
+      const {title, artwork} = track || {};
+      setPlaylist({
+        trackArtwork: artwork,
+        trackTitle: title,
+        currentTrack: currentTrack,
+      })
     }
   });
 
@@ -52,7 +55,6 @@ const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic}) => {
     selectMusic(false);
   }, []);
 
-  // console.log("[music card]", playbackState);
   return (
     <View>
       {(visibility)?
@@ -60,15 +62,15 @@ const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic}) => {
           (<View style={ApplicationStyles.playMusic}>
             <FastImage style={{height: 40, width: 40, borderRadius: 3}} 
               source={{
-                uri: trackArtwork,
+                uri: playlist.trackArtwork,
                 priority: FastImage.priority.high
               }} />
 
             <View style={ApplicationStyles.description}>
-              <Text style={{height: 22}, Font.style.description}>{trackTitle}</Text>
+              <Text style={{height: 22}, Font.style.description}>{playlist.trackTitle}</Text>
             </View>
 
-            {(currentTrack !== 0) ? 
+            {(playlist.currentTrack !== 0) ? 
               (<TouchableOpacity activeOpacity={0.6} onPress={() => PreviousMusic()}>
                 <Image source={images.previous} style={ApplicationStyles.icon} /> 
               </TouchableOpacity>)
@@ -80,12 +82,12 @@ const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic}) => {
               style={ApplicationStyles.iconCardMusic} /> 
             </TouchableOpacity>
 
-            {(currentTrack === (musicList.count -1))?
+            {(playlist.currentTrack === ((getPlayList === 'music-list')?(musicList.count -1): (getLibrary === null)? null:(getLibrary.length - 1))?
               <View style={ApplicationStyles.icon} /> :
               <TouchableOpacity activeOpacity={0.6} onPress={() => ForwardMusic()}>
                 <Image source={images.next} style={ApplicationStyles.icon} /> 
               </TouchableOpacity>
-            }
+            )}
 
           </View>) 
         : null )
@@ -100,6 +102,8 @@ const mapStateToProps = (state) => {
     onPlayMusic: SampleSelectors.getOnPlayMusic(state),
     visibility: SampleSelectors.getVisibility(state),
     musicList: SampleSelectors.getMusicList(state),
+    getPlayList: SampleSelectors.getPlayList(state),
+    getLibrary: SampleSelectors.getLibrary(state),
   }
 };
 

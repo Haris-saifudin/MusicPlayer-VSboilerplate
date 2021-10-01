@@ -162,7 +162,7 @@ const ApplicationStyles = StyleSheet.create({
     borderRadius: 6
   },
   button:{
-    backgroundColor: "#2d72cb", 
+    backgroundColor: 'red', 
     width: 350, 
     height: 45, 
     marginTop: 20,
