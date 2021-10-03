@@ -1,14 +1,9 @@
 import React, {PureComponent} from 'react';
-import {Image, FlatList, Text, View , TouchableOpacity, Button, Dimensions} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import ApplicationStyles from '../../Themes/ApplicationStyles';
+import {FlatList, View} from 'react-native';
 import {connect} from 'react-redux';
 import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
-import { onSelectMusic } from '../../Components/Music/MusicManager';
-import images from '../../Themes/Images';
 import SongItem from '../../Components/Music/SongItem';
 class SongScreen extends PureComponent {
-
     render() {
     const {musicList} = this.props;
     const ITEM_HEIGHT = 66;
@@ -33,16 +28,11 @@ class SongScreen extends PureComponent {
 const mapStateToProps = (state) => {
   return {
     musicList: SampleSelectors.getMusicList(state),
-    getLibrary: SampleSelectors.getLibrary(state),
-    getCountLibrary: SampleSelectors.getCountLibrary(state)
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
-    addToLibrary: (library) => dispatch(SampleActions.actionAddToLibrary(library)),
-    deleteLibrary: (index, item) => dispatch(SampleActions.actionDeleteLibrary(index, item)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SongScreen);

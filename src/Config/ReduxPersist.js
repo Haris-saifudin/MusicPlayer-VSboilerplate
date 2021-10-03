@@ -3,7 +3,7 @@ import MMKVStoragePersistHelper from '../Helper/MMKVStoragePersistHelper';
 // More info here:  https://shift.infinite.red/shipping-persistant-reducers-7341691232b1
 const REDUX_PERSIST = {
   active: true,
-  reducerVersion: '0.1',
+  reducerVersion: '0.2',
   storeConfig: {
     key: 'root',
     storage: MMKVStoragePersistHelper,
@@ -12,7 +12,7 @@ const REDUX_PERSIST = {
     // Optionally, just specify the keys you DO want stored to persistence.
     // An empty array means 'don't store any reducers' -> infinitered/ignite#409
     // whitelist: ['sample'
-    whitelist: ['sample', 'session']
+    whitelist: ['sample', 'session', 'music']
   }
 };
 

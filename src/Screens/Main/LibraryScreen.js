@@ -10,19 +10,23 @@ import SongScreen from './SongScreen';
 import FastImage from 'react-native-fast-image';
 import SongItem from '../../Components/Music/SongItem';
 import { UpdatePlayList , onSelectMusic} from '../../Components/Music/MusicManager';
+
+import {SessionSelectors, SessionsSelector} from '../../Redux/SessionRedux';
+import {values} from 'lodash';
+
 class LibraryScreen extends PureComponent {
 
   render() {
-    const {getLibrary, musicList} = this.props;
-    // console.log("[get library]", getLibrary);
+    const {library} = this.props;
     const ITEM_HEIGHT = 66;
+    const libraryArr = values(library);
+    // console.log("[library] ", libraryArr);
     return (
       <View style={ApplicationStyles.containerSearch}>
         <View style={{marginTop: 20, paddingHorizontal: 16, flex: 1}}>
           <Text style={[ApplicationStyles.titleOnBoard, {textAlign: 'left'}]}>Library</Text>
-          {(getLibrary !== null)?
             <FlatList 
-              data={getLibrary}
+              data={libraryArr}
               keyExtractor={item => item.trackId.toString() }
               getItemLayout={(data, index) => (
                 {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index}
@@ -30,11 +34,9 @@ class LibraryScreen extends PureComponent {
               maxToRenderPerBatch={7}
               windowSize={18}
               renderItem={(item, index) => <SongItem item={item.item} index={item.index} type={'library-list'} />}
-              /> : null
-          }
+              />
         </View>
         <MusicCard/>
-
       </View>
     );
   }
@@ -42,24 +44,14 @@ class LibraryScreen extends PureComponent {
 
 
 const mapStateToProps = (state) => {
-  // console.tron.error({state});
   return {
-    payload: SampleSelectors.getDataAction(state),
-    playMusic: SampleSelectors.getActiveMusic(state),
-    musicList: SampleSelectors.getMusicList(state),
-    onPlayMusic: SampleSelectors.getOnPlayMusic(state),
-    getLibrary: SampleSelectors.getLibrary(state),
-    getCountLibrary: SampleSelectors.getCountLibrary(state)
+    library: SessionSelectors.getLibrary(state),
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    reset: () => dispatch(SampleActions.reset()),
-    music: (status) => dispatch(SampleActions.actionPlayMusic(status)),
-    selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
-    searchMusic: (search) => dispatch(SampleActions.actionSearchMusic(search)),
-    deleteLibrary: (index, item) => dispatch(SampleActions.actionDeleteLibrary(index, item)),
+   
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(LibraryScreen);

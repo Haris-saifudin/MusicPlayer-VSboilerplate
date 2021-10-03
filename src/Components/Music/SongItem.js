@@ -1,54 +1,50 @@
-import React, {PureComponent, useState} from 'react';
-import {Image, FlatList, Text, View , TouchableOpacity, Button, Dimensions} from 'react-native';
+import React from 'react';
+import {Text, View , TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {connect, useDispatch} from 'react-redux';
 import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
+import {SessionSelectors} from "../../Redux/SessionRedux";
 import ApplicationStyles from '../../Themes/ApplicationStyles';
-import TrackPlayer, {Capability} from 'react-native-track-player';
-import { throttle, debounce } from 'lodash';
-import { onSelectMusic ,UpdatePlayList } from './MusicManager';
-import images from '../../Themes/Images';
+import { AddPlaylist, onSelectMusic, UpdatePlaylist} from './MusicManager';
 import ButtonLove from './ButtonLove';
-
+import {values} from 'lodash';
 
 const SongItem = ({
   item, 
   index, 
-  getLibrary, 
-  getCountLibrary,
   type,
   selectMusic,
   getPlayList,
   setPlaylist,
   musicList,
+  library
 }) =>{
-
+  const libraryArr = values(library);
 
   const chooseMusic = (item, index) =>{
+    console.log("[playlist]", getPlayList);
     if(type =='music-list'){
-      if(getPlayList === 'music-list'){
+      if(getPlayList.type === 'music-list' && getPlayList.play === true){
         onSelectMusic(index);
         selectMusic(item);
       }
       else{
-        UpdatePlayList(musicList.song, musicList.count, 'update', index);
         setPlaylist('music-list');
+        AddPlaylist('update', musicList.song, index);
         selectMusic(item);
       }
     }
     else{
-      if(getPlayList === 'library-list'){
+      if(getPlayList.type === 'library-list' && getPlayList.play === true){
         onSelectMusic(index);
         selectMusic(item);
-        console.log(getPlayList);
       }
       else{
-        UpdatePlayList(getLibrary, getCountLibrary, 'update-library', index);
+        AddPlaylist('update' ,libraryArr, index);
         setPlaylist('library-list');
         selectMusic(item);
       }
     }
-
   }
 
   return(
@@ -65,7 +61,7 @@ const SongItem = ({
           <Text style={ApplicationStyles.titleCard}>{item.trackCensoredName}</Text>
           <Text style={{height: 22}}>{item.kind} - {item.collectionName}</Text>
         </View>
-       <ButtonLove item={item} index={index} type={type}/>
+       <ButtonLove item={item} index={index}/>
       </View>
     </TouchableOpacity>
   )
@@ -74,20 +70,15 @@ const SongItem = ({
 const mapStateToProps = (state) => {
   return {
     musicList: SampleSelectors.getMusicList(state),
-    visibility: SampleSelectors.getVisibility(state),
-    getLibrary: SampleSelectors.getLibrary(state),
-    getCountLibrary: SampleSelectors.getCountLibrary(state),
     getPlayList: SampleSelectors.getPlayList(state),
+    library: SessionSelectors.getLibrary(state),
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
-    deleteLibrary: (index, item) => dispatch(SampleActions.actionDeleteLibrary(index, item)),
-    addToLibrary: (library) => dispatch(SampleActions.actionAddToLibrary(library)),
     setPlaylist: (list) => dispatch(SampleActions.actionSetPlayList(list)),
-    setLove: (love) => dispatch(SampleActions.actionSetLove(love)),
   };
 };
 

@@ -1,17 +1,6 @@
 import {call, put} from 'redux-saga/effects';
-import {path} from 'ramda';
 import SampleActions, { SampleSelectors } from '../Redux/SampleRedux';
-import {Alert} from 'react-native';
-import NavigationServices from '../Navigation/NavigationServices';
-import { UpdatePlaylist } from '../Components/Music/MusicManager';
-
-export function SampleReset() {
-  NavigationServices.setRootAuth();
-}
-export function SampleAction() {
-  NavigationServices.setRootMain();
-  UpdatePlaylist();
-}
+import { UpdatePlayList } from '../Components/Music/MusicManager';
 
 
 export function* SearchAction(api, {search}) {
@@ -21,6 +10,7 @@ export function* SearchAction(api, {search}) {
 
     if (response.ok) {
       if(albumApiResponse.ok){
+
         let playlist = [];
         for(var index = 0; index< response.data.resultCount; index++){
           playlist.push({
@@ -36,15 +26,15 @@ export function* SearchAction(api, {search}) {
             artwork: response.data.results[index].artworkUrl30,
             like: false,
           })
-        }
 
+        }
         yield put(SampleActions.actionSuccess({
           status: 'success',
           song: playlist, 
           count: response.data.resultCount,
           album: albumApiResponse.data.results,
         }));
-        
+
     }} 
     else {
       throw response;
