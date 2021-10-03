@@ -1,67 +1,48 @@
 import React, {PureComponent, useEffect} from 'react';
 import TrackPlayer, {
-  Capability,
-  usePlaybackState,
-  State,
-  RepeatMode,
-  Event,
-  useTrackPlayerEvents
+  Capability, RepeatMode,
 } from 'react-native-track-player';
-import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
-import { connect, useDispatch, useSelector } from 'react-redux';
 
-
-export const UpdatePlayList = async (musicList, count, type, index) => {
-  await TrackPlayer.reset();
-  await TrackPlayer.stop();
+export const UpdatePlaylist = async () => {
+  // await TrackPlayer.reset();
+  // await TrackPlayer.stop();
   await TrackPlayer.setupPlayer();
-  
-  console.log(type);
-  if(type === 'update-library'){
-    await TrackPlayer.add(musicList);
-  }
-  else{
-    await TrackPlayer.add(musicList);
-  }
-
-  // console.log("[type]", type);
   await TrackPlayer.updateOptions({
     stopWithApp: true,
     capabilities: [
       Capability.Play,
       Capability.Pause,
-      Capability.SkipToNext,
-      Capability.SkipToPrevious,
-      Capability.Stop,
+      // Capability.Stop,
+      // Capability.SkipToNext,
+      // Capability.SkipToPrevious
     ],
-    compactCapabilities: [
-      Capability.Play, 
-      Capability.Pause,  
-      Capability.SkipToNext,
-      Capability.SkipToPrevious,
-      Capability.Stop,],
   });
-  console.log('[update music list]');
 
-  if(type === 'update-library' || type === 'update'){
+  await TrackPlayer.setRepeatMode(RepeatMode.Queue);
+};
+
+export const AddPlaylist = async(type, item, index) => {
+  if(type === 'update'){
+    console.log('add new playlist');
+    await TrackPlayer.reset();
+    await UpdatePlaylist();
+    await TrackPlayer.add(item);
     await TrackPlayer.skip(index);
     await TrackPlayer.play();
   }
-};
-
+  else{
+    await TrackPlayer.skip(index);
+    await TrackPlayer.play();
+  }
+}
 
 export const PlayingMusic = async(param) =>{
-    console.log('param');
     if (param === 2) { // 3 (play) , 2 (pause)
       await TrackPlayer.play();
     } else {
       await TrackPlayer.pause();
     }
 }
-export const AddPlaylist = async(item) =>{
-  await TrackPlayer.add(item);
-}
-
 
 export const ForwardMusic = async() =>{
   await TrackPlayer.skipToNext();
@@ -69,7 +50,20 @@ export const ForwardMusic = async() =>{
 }
 
 export const RemoveMusic = async(index) =>{
-  await TrackPlayer.remove(index)
+  // if current track is played, 
+  if(await TrackPlayer.getCurrentTrack() === index){
+    await TrackPlayer.skipToNext();
+    await TrackPlayer.remove(index);
+    console.log("delete success");
+  }
+  else{
+    await TrackPlayer.remove(index);
+    console.log("delete");
+  }
+}
+
+export const AddMusicToLibrary = async(item, index) =>{
+  await TrackPlayer.add(item, index);
 }
 
 export const PreviousMusic = async() =>{
@@ -78,17 +72,19 @@ export const PreviousMusic = async() =>{
 }
 
 export const onSelectMusic = async(index) =>{
-  //select playlist
   await TrackPlayer.skip(index);
-  await TrackPlayer.play()
+  await TrackPlayer.play();
 }
 
 export const StopMusic = async(item) =>{
-  //select playlist
   await TrackPlayer.stop();
 }
 
 export const Pause = async() =>{
-  //select playlist
   await TrackPlayer.pause();
+}
+
+export const CurrentTrack = async() =>{
+  const track = await TrackPlayer.getCurrentTrack();
+  return track;
 }
