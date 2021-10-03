@@ -42,7 +42,6 @@ const mapDispatchToProps = (dispatch) => {
     deleteLibrary: (index, item) => dispatch(SampleActions.actionDeleteLibrary(index, item)),
     addToLibrary: (library) => dispatch(SampleActions.actionAddToLibrary(library)),
     setPlaylist: (list) => dispatch(SampleActions.actionSetPlayList(list)),
-    setLove: (love) => dispatch(SampleActions.actionSetLove(love)),
   };
 };
 

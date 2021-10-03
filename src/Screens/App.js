@@ -27,31 +27,31 @@ class App extends PureComponent {
     // this.FCMInit()
   }
 
-  requestUserPermission = async () => {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+  // requestUserPermission = async () => {
+  //   const authStatus = await messaging().requestPermission();
+  //   const enabled =
+  //     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+  //     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-    if (enabled) {
-      console.log('Authorization status:', authStatus);
-    }
-  }
+  //   if (enabled) {
+  //     console.log('Authorization status:', authStatus);
+  //   }
+  // }
 
-  FCMInit = () => {
-    fcmService.register(
-      this.onRegister,
-      this.onOpenNotification,
-    );
-  }
+  // FCMInit = () => {
+  //   fcmService.register(
+  //     this.onRegister,
+  //     this.onOpenNotification,
+  //   );
+  // }
 
-  onRegister = token => {
-    console.log('[NotificationFCM] onRegister: ', token);
-  };
+  // onRegister = token => {
+  //   console.log('[NotificationFCM] onRegister: ', token);
+  // };
 
-  onOpenNotification(notify) {
-    console.log('[NotificationFCM] onOpenNotification: ', notify);
-  }
+  // onOpenNotification(notify) {
+  //   console.log('[NotificationFCM] onOpenNotification: ', notify);
+  // }
 
   render() {
     splashscreen.hide();

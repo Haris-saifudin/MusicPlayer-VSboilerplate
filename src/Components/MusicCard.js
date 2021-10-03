@@ -24,9 +24,7 @@ import Font from '../Themes/Fonts';
 import images from '../Themes/Images';
 import {PlayingMusic, PreviousMusic, ForwardMusic} from './Music/MusicManager';
 
-
-
-const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic, getPlayList, getLibrary}) => {
+const MusicCard = ({onPlayMusic, visibility, selectMusic}) => {
   const playbackState = usePlaybackState();
   const [playlist, setPlaylist] = useState({
     trackArtwork: '',
@@ -82,12 +80,12 @@ const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic, getPlayList
               style={ApplicationStyles.iconCardMusic} /> 
             </TouchableOpacity>
 
-            {(playlist.currentTrack === ((getPlayList === 'music-list')?(musicList.count -1): (getLibrary === null)? null:(getLibrary.length - 1))?
-              <View style={ApplicationStyles.icon} /> :
+            {/* {(playlist.currentTrack === ((getPlayList === 'music-list')?(musicList.count -1): (getLibrary === null)? null:(getLibrary.length - 1))?
+              <View style={ApplicationStyles.icon} /> : */}
               <TouchableOpacity activeOpacity={0.6} onPress={() => ForwardMusic()}>
                 <Image source={images.next} style={ApplicationStyles.icon} /> 
               </TouchableOpacity>
-            )}
+            {/* )} */}
 
           </View>) 
         : null )
@@ -98,18 +96,13 @@ const MusicCard = ({onPlayMusic, musicList, visibility, selectMusic, getPlayList
 
 const mapStateToProps = (state) => {
   return {
-    playMusic: SampleSelectors.getActiveMusic(state),
     onPlayMusic: SampleSelectors.getOnPlayMusic(state),
     visibility: SampleSelectors.getVisibility(state),
-    musicList: SampleSelectors.getMusicList(state),
-    getPlayList: SampleSelectors.getPlayList(state),
-    getLibrary: SampleSelectors.getLibrary(state),
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    music: (status) => dispatch(SampleActions.actionPlayMusic(status)),
     selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
   };
 };
