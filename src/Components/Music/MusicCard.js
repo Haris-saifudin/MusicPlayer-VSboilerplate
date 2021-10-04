@@ -8,23 +8,21 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import TrackPlayer, {
-  Capability,
-  RepeatMode,
   State,
   usePlaybackState,
   useTrackPlayerEvents,
   Event
-  
 } from 'react-native-track-player';
 
 import {connect} from 'react-redux';
-import SampleActions, { SampleSelectors } from '../Redux/SampleRedux';
-import ApplicationStyles from '../Themes/ApplicationStyles';
-import Font from '../Themes/Fonts';
-import images from '../Themes/Images';
-import {PlayingMusic, PreviousMusic, ForwardMusic} from './Music/MusicManager';
+import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
+import MusicActions, { MusicSelectors } from '../../Redux/MusicRedux';
+import ApplicationStyles from '../../Themes/ApplicationStyles';
+import Font from '../../Themes/Fonts';
+import images from '../../Themes/Images';
+import {PlayingMusic, PreviousMusic, ForwardMusic} from './MusicManager';
 
-const MusicCard = ({onPlayMusic, visibility, selectMusic}) => {
+const MusicCard = ({getPlaylist, visibility, selectMusic}) => {
   const playbackState = usePlaybackState();
   const [playlist, setPlaylist] = useState({
     trackArtwork: '',
@@ -56,7 +54,7 @@ const MusicCard = ({onPlayMusic, visibility, selectMusic}) => {
   return (
     <View>
       {(visibility)?
-        ((onPlayMusic)?
+        ((getPlaylist.play)?
           (<View style={ApplicationStyles.playMusic}>
             <FastImage style={{height: 40, width: 40, borderRadius: 3}} 
               source={{
@@ -96,14 +94,14 @@ const MusicCard = ({onPlayMusic, visibility, selectMusic}) => {
 
 const mapStateToProps = (state) => {
   return {
-    onPlayMusic: SampleSelectors.getOnPlayMusic(state),
-    visibility: SampleSelectors.getVisibility(state),
+    getPlaylist: MusicSelectors.getPlayList(state),
+    visibility: MusicSelectors.getVisibility(state),
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
+    selectMusic: (params) => dispatch(MusicActions.actionSelectMusic(params)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MusicCard);
