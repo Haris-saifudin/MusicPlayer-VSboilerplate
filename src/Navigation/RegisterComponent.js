@@ -15,12 +15,11 @@ import RadioScreen from '../Screens/Main/RadioScreen';
 import LibraryScreen from '../Screens/Main/LibraryScreen';
 import PlayScreen from '../Screens/Main/PlayScreen';
 import OnboardScreen from '../Screens/Auth/OnboardScreen';
-import MusicCard from '../Components/MusicCard';
+import MusicCard from '../Components/Music/MusicCard';
 import TrackPlayer from 'react-native-track-player';
 import MusicSearch from '../Components/MusicSearch';
 import MusicList from '../Components/Music/MusicList';
-import NavigationMusic from '../Components/NavigationMusic';
-
+import ButtonLogout from '../Components/TopBar/ButtonLogout';
 
 export const NAVIGATION_NAME = {
   APP: 'app',
@@ -45,7 +44,9 @@ export const NAVIGATION_NAME = {
     musicCard: 'component.musicCard',
     musicSeaarch: 'component.musicSearch',
     musicList: 'component.musicList',
-    navMusic: 'component.navmusic',
+  },
+  TOPBAR:{
+    logout: 'topbar.logout',
   }
 };
 
@@ -82,9 +83,6 @@ export default function () {
   Navigation.registerComponent(NAVIGATION_NAME.COMPONENTS.musicList, () =>
     ReduxWrapper(MusicList)
   );
-  Navigation.registerComponent(NAVIGATION_NAME.COMPONENTS.navMusic, () =>
-    ReduxWrapper(NavigationMusic)
-  );
 
   Navigation.registerComponent(NAVIGATION_NAME.AUTH.onboard, () =>
     ReduxWrapper(OnboardScreen)
@@ -105,4 +103,6 @@ export default function () {
     ReduxWrapper(SearchSreen)
   );
   
+  Navigation.registerComponent(NAVIGATION_NAME.TOPBAR.logout, () =>
+  ReduxWrapper(ButtonLogout));
 }

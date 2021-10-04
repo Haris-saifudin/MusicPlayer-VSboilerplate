@@ -28,8 +28,16 @@ function setRootAuth() {
             component: {
               name: NAVIGATION_NAME.AUTH.onboard
             }
+            
           }
         ],
+        options:{
+          statusBar: {
+            visible: true, // Optional
+            style: 'dark', // Optional ('light', 'dark')
+            backgroundColor: 'white', // Optional, Android only
+          }
+        }
       }
     }
   });
@@ -61,6 +69,42 @@ function setRootMain(){
                   selectedIconColor: 'red',
                   selectedTextColor: 'red'
                 },
+                topBar : {
+                  rightButtons: [
+                    {
+                      id: 'custom',
+                      component: {
+                        name: NAVIGATION_NAME.TOPBAR.logout 
+                      },
+                      text: 'Logout', // Optional
+                      allCaps: false, // Optional, Android only
+                      fontSize: 18, // Optional
+                      fontWeight: 'bold',
+                      showAsAction: 'always', // Optional ('always', 'never', 'withText', 'ifRoom')
+                    
+                    }
+                  ], 
+                  visible: true,
+                  title: {
+                    text: ''
+                    // text: 'Browse', // Optional
+                    // fontSize: 22, // Optional
+                    // color: 'black', // Optional
+                    // // fontFamily: , // Optional
+                    // fontWeight: 'bold', 
+                    // alignment: 'center', // Optional (center, fill)
+                    // topMargin: 0, // Optional
+                  }, // Optional
+                  subtitle: {
+                    text: ''
+                  },
+                  background:{
+                    color: 'white'
+                  },
+                  rightButtonColor: 'red',
+                  borderHeight: 0,
+                  //
+                }
               }
             }
           },
@@ -84,6 +128,7 @@ function setRootMain(){
                   selectedIconColor: 'red',
                   selectedTextColor: 'red'
                 },
+               
               }
             }
           },
@@ -153,6 +198,11 @@ function setRootMain(){
                   selectedIconColor: 'red',
                   selectedTextColor: 'red'
                 },
+                statusBar: {
+                  visible: true, // Optional
+                  style: 'dark', // Optional ('light', 'dark')
+                  backgroundColor: 'white', // Optional, Android only
+                }
               }
             }
           },

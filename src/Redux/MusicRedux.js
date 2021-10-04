@@ -33,7 +33,7 @@ export const INITIAL_STATE = {
     play: false,
   },
   search: undefined,
-  visibility: true,
+  visibility: false,
 };
 
 /* ------------- Selectors ------------- */
@@ -97,6 +97,10 @@ export const actionVisibilityReducer = (state) => {
   return {
     ...state,
     visibility: false,
+    playlist: {
+      ...state.playlist,
+      play: false,
+    },
   };
 };
 

@@ -9,8 +9,12 @@ import Api from '../Services/Api';
 
 /* ------------- Sagas ------------- */
 
-import {SampleAction, SampleReset, SearchAction} from './SampleSagas';
+import {SampleAction, SampleReset} from './SampleSagas';
+import {SearchAction} from './SearchSagas';
 import {startup} from './StartupSagas';
+import {ActionReset, ActionNavigateToMain} from './SessionSagas';
+import { reducers } from '../Redux';
+
 
 /* ------------- API ------------- */
 
@@ -25,8 +29,8 @@ const api = Api.create();
 export default function* root() {
   yield all([
     // some sagas only receive an action
-    takeLatest(SampleTypes.ACTION_REQUEST, SampleAction, api),
-    takeLatest(SampleTypes.RESET, SampleReset),
+    takeLatest(SampleTypes.ACTION_REQUEST, ActionNavigateToMain, api),
+    takeLatest(SampleTypes.RESET, ActionReset, reducers),
     takeLatest(StartupTypes.STARTUP, startup),
     takeLatest(SampleTypes.ACTION_SEARCH_MUSIC, SearchAction, api),
     // some sagas receive extra parameters in addition to an action

@@ -11,8 +11,9 @@ const resettable = resettableReducer('RESET');
 
 export const reducers = combineReducers({
   sample: resettable(require('./SampleRedux').reducer),
-  session: resettable(require('./SessionRedux').reducer),
-  music: resettable(require('./MusicRedux').reducer)
+  session: require('./SessionRedux').reducer,
+  music: resettable(require('./MusicRedux').reducer),
+  library: resettable(require('./LibraryRedux').reducer)
 });
 
 export default () => {

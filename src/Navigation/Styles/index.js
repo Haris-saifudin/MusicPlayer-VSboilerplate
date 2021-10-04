@@ -60,7 +60,7 @@ const DefaultOptions = {
         text: 'Button 1', // Optional
         allCaps: false, // Optional, Android only
         fontSize: 11, // Optional
-        icon: Images.icon, // Optional
+        // icon: Images.icon, // Optional
         showAsAction: 'always', // Optional ('always', 'never', 'withText', 'ifRoom')
       }
     ], // Optional

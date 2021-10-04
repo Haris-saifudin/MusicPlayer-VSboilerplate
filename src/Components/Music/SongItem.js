@@ -3,11 +3,12 @@ import {Text, View , TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {connect, useDispatch} from 'react-redux';
 import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
-import {SessionSelectors} from "../../Redux/SessionRedux";
+import MusicActions, { MusicSelectors } from '../../Redux/MusicRedux';
 import ApplicationStyles from '../../Themes/ApplicationStyles';
 import { AddPlaylist, onSelectMusic, UpdatePlaylist} from './MusicManager';
 import ButtonLove from './ButtonLove';
 import {values} from 'lodash';
+import { LibrarySelectors } from '../../Redux/LibraryRedux';
 
 const SongItem = ({
   item, 
@@ -69,16 +70,16 @@ const SongItem = ({
 
 const mapStateToProps = (state) => {
   return {
-    musicList: SampleSelectors.getMusicList(state),
-    getPlayList: SampleSelectors.getPlayList(state),
-    library: SessionSelectors.getLibrary(state),
+    musicList: MusicSelectors.getMusicList(state),
+    getPlayList: MusicSelectors.getPlayList(state),
+    library: LibrarySelectors.getLibrary(state),
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
-    setPlaylist: (list) => dispatch(SampleActions.actionSetPlayList(list)),
+    selectMusic: (params) => dispatch(MusicActions.actionSelectMusic(params)),
+    setPlaylist: (list) => dispatch(MusicActions.actionSetPlayList(list)),
   };
 };
 
