@@ -23,7 +23,7 @@ export const UpdatePlaylist = async () => {
 
 export const AddPlaylist = async(type, item, index) => {
   if(type === 'update'){
-    console.log('add new playlist');
+    console.log('[add new playlist]');
     await TrackPlayer.reset();
     await UpdatePlaylist();
     await TrackPlayer.add(item);
@@ -49,11 +49,10 @@ export const ForwardMusic = async() =>{
   await TrackPlayer.play();
 }
 
-export const RemoveMusic = async(index) =>{
-  // if current track is played, 
-  if(await TrackPlayer.getCurrentTrack() === index){
-    await TrackPlayer.skipToNext();
-    await TrackPlayer.remove(index);
+export const RemoveMusic = async(index, type) =>{
+
+  if(type === 'delete-playlist'){
+    await TrackPlayer.stop();
     console.log("delete success");
   }
   else{
