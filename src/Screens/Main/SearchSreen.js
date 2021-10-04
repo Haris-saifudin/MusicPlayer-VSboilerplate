@@ -4,11 +4,16 @@ import {connect} from 'react-redux';
 import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
 import ApplicationStyles from '../../Themes/ApplicationStyles';
 import Search from '../../Components/MusicSearch';
-import MusicCard from '../../Components/MusicCard';
+import MusicCard from '../../Components/Music/MusicCard';
 import MusicList from '../../Components/Music/MusicList';
+import MusicActions, { MusicSelectors } from '../../Redux/MusicRedux';
 import { SessionSelectors } from '../../Redux/SessionRedux';
-import { UpdatePlayList } from '../../Components/Music/MusicManager';
 class SearchScreen extends PureComponent {
+  componentDidMount(){
+    const {setVisibility} = this.props;
+    setVisibility();
+
+  }
 
   render() {
     const {payload, musicList} = this.props;
@@ -34,16 +39,14 @@ class SearchScreen extends PureComponent {
 const mapStateToProps = (state) => {
   console.tron.error({state});
   return {
-    payload: SampleSelectors.getDataAction(state),
-    session: SessionSelectors.getSessionStatus(state),
-    musicList: SampleSelectors.getMusicList(state),
-    onPlayMusic: SampleSelectors.getOnPlayMusic(state),
+    payload: MusicSelectors.getDataAction(state),
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
+    //
+    setVisibility: () => dispatch(MusicActions.actionVisibility()),
   };
 };
 

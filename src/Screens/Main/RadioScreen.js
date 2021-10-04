@@ -1,9 +1,10 @@
 import React, {PureComponent} from 'react';
-import {Button, Image, FlatList, Text, View , TouchableOpacity, SafeAreaView, TextInput} from 'react-native';
+import {View} from 'react-native';
 import {connect} from 'react-redux';
+import MusicActions, { MusicSelectors } from '../../Redux/MusicRedux';
 import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
 import ApplicationStyles from '../../Themes/ApplicationStyles';
-import MusicCard from '../../Components/MusicCard';
+import MusicCard from '../../Components/Music/MusicCard';
 
 
 class RadioScreen extends PureComponent {
@@ -20,19 +21,18 @@ class RadioScreen extends PureComponent {
 const mapStateToProps = (state) => {
   // console.tron.error({state});
   return {
-    payload: SampleSelectors.getDataAction(state),
-    playMusic: SampleSelectors.getActiveMusic(state),
-    musicList: SampleSelectors.getMusicList(state),
-    onPlayMusic: SampleSelectors.getOnPlayMusic(state),
+    payload: MusicSelectors.getDataAction(state),
+    playMusic: MusicSelectors.getActiveMusic(state),
+    musicList: MusicSelectors.getMusicList(state),
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    reset: () => dispatch(SampleActions.reset()),
-    music: (status) => dispatch(SampleActions.actionPlayMusic(status)),
-    selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
-    searchMusic: (search) => dispatch(SampleActions.actionSearchMusic(search)),
+    reset: () => dispatch(MusicActions.reset()),
+    music: (status) => dispatch(MusicActions.actionPlayMusic(status)),
+    selectMusic: (params) => dispatch(MusicActions.actionSelectMusic(params)),
+    searchMusic: (search) => dispatch(MusicActions.actionSearchMusic(search)),
 
   };
 };

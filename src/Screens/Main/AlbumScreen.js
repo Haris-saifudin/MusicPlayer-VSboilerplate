@@ -3,6 +3,7 @@ import {Image, FlatList, Text, View , TouchableOpacity, Button, Dimensions} from
 import FastImage from 'react-native-fast-image';
 import ApplicationStyles from '../../Themes/ApplicationStyles';
 import {connect} from 'react-redux';
+import MusicActions, { MusicSelectors } from '../../Redux/MusicRedux';
 import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
 import AlbumItem from '../../Components/Music/AlbumItem';
 class AlbumScreen extends PureComponent {
@@ -29,7 +30,7 @@ class AlbumScreen extends PureComponent {
 
 const mapStateToProps = (state) => {
   return {
-    musicList: SampleSelectors.getMusicList(state),
+    musicList: MusicSelectors.getMusicList(state),
   }
 };
 

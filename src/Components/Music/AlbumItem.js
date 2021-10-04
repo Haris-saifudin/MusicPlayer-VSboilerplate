@@ -2,7 +2,8 @@ import React, {PureComponent, useState} from 'react';
 import {Image, FlatList, Text, View , TouchableOpacity, Button, Dimensions} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {connect, useDispatch} from 'react-redux';
-import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
+// import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
+import MusicActions, { MusicSelectors } from '../../Redux/MusicRedux';
 import ApplicationStyles from '../../Themes/ApplicationStyles';
 
 const AlbumItem = ({item, index}) =>{
@@ -28,20 +29,20 @@ const AlbumItem = ({item, index}) =>{
 
 const mapStateToProps = (state) => {
   return {
-    musicList: SampleSelectors.getMusicList(state),
-    visibility: SampleSelectors.getVisibility(state),
-    getLibrary: SampleSelectors.getLibrary(state),
-    getCountLibrary: SampleSelectors.getCountLibrary(state),
-    getPlayList: SampleSelectors.getPlayList(state),
+    musicList: MusicSelectors.getMusicList(state),
+    visibility: MusicSelectors.getVisibility(state),
+    getLibrary: MusicSelectors.getLibrary(state),
+    getCountLibrary: MusicSelectors.getCountLibrary(state),
+    getPlayList: MusicSelectors.getPlayList(state),
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    selectMusic: (params) => dispatch(SampleActions.actionSelectMusic(params)),
-    deleteLibrary: (index, item) => dispatch(SampleActions.actionDeleteLibrary(index, item)),
-    addToLibrary: (library) => dispatch(SampleActions.actionAddToLibrary(library)),
-    setPlaylist: (list) => dispatch(SampleActions.actionSetPlayList(list)),
+    selectMusic: (params) => dispatch(MusicActions.actionSelectMusic(params)),
+    deleteLibrary: (index, item) => dispatch(MusicActions.actionDeleteLibrary(index, item)),
+    addToLibrary: (library) => dispatch(MusicActions.actionAddToLibrary(library)),
+    setPlaylist: (list) => dispatch(MusicActions.actionSetPlayList(list)),
   };
 };
 

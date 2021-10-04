@@ -1,17 +1,10 @@
 import React, {PureComponent} from 'react';
-import {Button, Image, FlatList, Text, View , TouchableOpacity, SafeAreaView, TextInput} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import {connect} from 'react-redux';
-import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
 import ApplicationStyles from '../../Themes/ApplicationStyles';
-import Font from '../../Themes/Fonts';
-import images from '../../Themes/Images';
-import MusicCard from '../../Components/MusicCard';
-import SongScreen from './SongScreen';
-import FastImage from 'react-native-fast-image';
+import MusicCard from '../../Components/Music/MusicCard';
 import SongItem from '../../Components/Music/SongItem';
-import { UpdatePlayList , onSelectMusic} from '../../Components/Music/MusicManager';
-
-import {SessionSelectors, SessionsSelector} from '../../Redux/SessionRedux';
+import {LibrarySelectors} from '../../Redux/LibraryRedux';
 import {values} from 'lodash';
 
 class LibraryScreen extends PureComponent {
@@ -45,7 +38,7 @@ class LibraryScreen extends PureComponent {
 
 const mapStateToProps = (state) => {
   return {
-    library: SessionSelectors.getLibrary(state),
+    library: LibrarySelectors.getLibrary(state),
   }
 };
 

@@ -1,10 +1,13 @@
 import React, {PureComponent} from 'react';
 import {FlatList, View} from 'react-native';
 import {connect} from 'react-redux';
-import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
+import MusicActions, { MusicSelectors } from '../../Redux/MusicRedux';
 import SongItem from '../../Components/Music/SongItem';
 class SongScreen extends PureComponent {
-    render() {
+
+
+
+  render() {
     const {musicList} = this.props;
     const ITEM_HEIGHT = 66;
     return (
@@ -27,12 +30,14 @@ class SongScreen extends PureComponent {
 
 const mapStateToProps = (state) => {
   return {
-    musicList: SampleSelectors.getMusicList(state),
+    musicList: MusicSelectors.getMusicList(state),
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setVisibility: () => dispatch(MusicActions.actionVisibility()),
+
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SongScreen);

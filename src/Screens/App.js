@@ -57,8 +57,8 @@ class App extends PureComponent {
     splashscreen.hide();
     return (
       <Fragment>
-        <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-        <DownloadUpdateModal />
+        <StatusBar barStyle='dark-content' backgroundColor="#ffffff" />
+        {/* <DownloadUpdateModal /> */}
         <View
           style={{
             flex: 1,
