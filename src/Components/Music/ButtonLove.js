@@ -1,53 +1,70 @@
-import React, {PureComponent, useState} from 'react';
-import {Image, FlatList, Text, View , TouchableOpacity, Button, Dimensions} from 'react-native';
-import {connect, useDispatch} from 'react-redux';
-import SampleActions, { SampleSelectors } from '../../Redux/SampleRedux';
-import SessionsActions, { SessionSelectors } from '../../Redux/SessionRedux';
+import React, {useState} from 'react';
+import {Image, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
+import MusicActions, { MusicSelectors } from '../../Redux/MusicRedux';
+import LibraryActions, { LibrarySelectors } from '../../Redux/LibraryRedux';
 import images from '../../Themes/Images';
 import { RemoveMusic, AddMusicToLibrary } from './MusicManager';
 import {values} from 'lodash';
+import TrackPlayer from 'react-native-track-player';
 
 
 const ButtonLove = ({loveStatus, addToLibrary, removeFromLibrary,
-   item, getPlayList, index, library}) =>{
+   item, getPlayList, index, library, setVisbility}) =>{
 
   const [addPlaylistMusic, setAddPlaylistMusic] = useState(true);
-  return(
-        <TouchableOpacity activeOpacity={0.8} onPress={ () => {
-          if(loveStatus){
-            //when music list is played, and u want to unlove from library
-            if(getPlayList.type === 'library-list' && getPlayList.play === true){
-              console.log("[on play]");
-              RemoveMusic(index);
-            }
-            removeFromLibrary(item.trackId);
+  
+  const getTrack = async() =>{
+    const getCurrentTrack = await TrackPlayer.getCurrentTrack();
+    const getTrack = await TrackPlayer.getTrack(getCurrentTrack);
+    if(await getTrack.trackId === item.trackId){
+      setVisbility();
+      RemoveMusic(getCurrentTrack, 'delete-playlist');
+    }
+    else{
+      RemoveMusic(index);
+    }
+  }
+
+  const updateLoveStatus = () => {
+    if(loveStatus){
+      //when music list is played, and you want to unlove from library
+      if(getPlayList.type === 'library-list' && getPlayList.play === true){
+        getTrack();
+      }
+      removeFromLibrary(item.trackId);
+      console.log("[Remove from library]");
+    }
+
+    else{
+      if(getPlayList.type === 'library-list' && getPlayList.play === true){
+        const libraryArr = values(library);
+        for(var indexLibrary = 0; indexLibrary < libraryArr.length; indexLibrary++){
+
+          // update playlist music when 'library-list' played
+          if(item.trackId < libraryArr[indexLibrary].trackId){
+
+            // add playlist with specific index
+            AddMusicToLibrary(item, indexLibrary);
+            setAddPlaylistMusic(true);
+            break;
           }
           else{
-            if(getPlayList.type === 'library-list' && getPlayList.play === true){
-              const libraryArr = values(library);
-              for(var indexLibrary = 0; indexLibrary< libraryArr.length; indexLibrary++){
-
-                // update playlist music when 'library-list' played
-                if(item.trackId < libraryArr[indexLibrary].trackId){
-
-                  // add playlist with specific index
-                  AddMusicToLibrary(item, indexLibrary);
-                  setAddPlaylistMusic(true);
-                  break;
-                }
-                else{
-                  setAddPlaylistMusic(false);
-                }
-              }
-
-              //add playlist to end index.
-              if(addPlaylistMusic === false){
-                AddMusicToLibrary(item);
-              }
-            }
-            addToLibrary(item);
+            setAddPlaylistMusic(false);
           }
-        }}
+        }
+
+        //add playlist to end index.
+        if(addPlaylistMusic === false){
+          AddMusicToLibrary(item);
+        }
+      }
+      addToLibrary(item);
+    }
+  }
+
+  return(
+        <TouchableOpacity activeOpacity={0.8} onPress={ () => updateLoveStatus()}
           style={{marginLeft: 4, flexDirection: 'column', justifyContent: 'center'}}
         >
           <Image style={{height: 20, width: 20, marginRight: 12}} source={(loveStatus)? images.love: images.unlove} />
@@ -57,16 +74,17 @@ const ButtonLove = ({loveStatus, addToLibrary, removeFromLibrary,
 
 const mapStateToProps = (state, {item}) => {
   return {
-    getPlayList: SampleSelectors.getPlayList(state),
-    loveStatus: SessionSelectors.isExistInLibrary(state, item.trackId),
-    library: SessionSelectors.getLibrary(state),
+    getPlayList: MusicSelectors.getPlayList(state),
+    loveStatus: LibrarySelectors.isExistInLibrary(state, item.trackId),
+    library: LibrarySelectors.getLibrary(state),
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToLibrary: (data) => dispatch(SessionsActions.addToLibrary(data)),
-    removeFromLibrary: (id) => dispatch(SessionsActions.removeFromLibrary(id))
+    addToLibrary: (data) => dispatch(LibraryActions.addToLibrary(data)),
+    removeFromLibrary: (id) => dispatch(LibraryActions.removeFromLibrary(id)),
+    setVisbility: (state) => dispatch(MusicActions.actionVisibility(state))
   };
 };
 
