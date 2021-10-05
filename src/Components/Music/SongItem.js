@@ -59,8 +59,8 @@ const SongItem = ({
           resizeMode={FastImage.resizeMode.contain}
         />
         <View style={ApplicationStyles.description}>
-          <Text style={ApplicationStyles.titleCard}>{item.trackCensoredName}</Text>
-          <Text style={{height: 22}}>{item.kind} - {item.collectionName}</Text>
+          <Text numberOfLines={1} style={ApplicationStyles.titleCard}>{item.trackCensoredName}</Text>
+          <Text numberOfLines={1} >{item.kind} - {item.collectionName}</Text>
         </View>
        <ButtonLove item={item} index={index}/>
       </View>

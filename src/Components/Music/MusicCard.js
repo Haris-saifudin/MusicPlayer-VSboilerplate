@@ -63,7 +63,7 @@ const MusicCard = ({getPlaylist, visibility, selectMusic}) => {
               }} />
 
             <View style={ApplicationStyles.description}>
-              <Text style={{height: 22}, Font.style.description}>{playlist.trackTitle}</Text>
+              <Text numberOfLines={1} style={ Font.style.description}>{playlist.trackTitle}</Text>
             </View>
 
             {(playlist.currentTrack !== 0) ? 

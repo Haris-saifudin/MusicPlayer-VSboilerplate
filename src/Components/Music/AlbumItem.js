@@ -18,8 +18,8 @@ const AlbumItem = ({item, index}) =>{
             resizeMode={FastImage.resizeMode.contain}
           />
           <View style={ApplicationStyles.description}>
-            <Text style={ApplicationStyles.titleCard}>{item.collectionCensoredName}</Text>
-            <Text style={{height: 22}}>{item.collectionType}</Text>
+            <Text numberOfLines={1} style={ApplicationStyles.titleCard}>{item.collectionCensoredName}</Text>
+            <Text numberOfLines={1}>{item.collectionType}</Text>
           </View>
       </View>
     </TouchableOpacity>
