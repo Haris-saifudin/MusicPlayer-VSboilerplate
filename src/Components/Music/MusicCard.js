@@ -49,6 +49,10 @@ const MusicCard = ({getPlaylist, visibility, selectMusic}) => {
 
   useEffect(() => {
     selectMusic(false);
+    // return async() =>{
+    //   await TrackPlayer.stop();
+    //   console.log("stop music card");
+    // }
   }, []);
 
   return (

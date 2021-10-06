@@ -3,7 +3,7 @@ import MMKVStoragePersistHelper from '../Helper/MMKVStoragePersistHelper';
 // More info here:  https://shift.infinite.red/shipping-persistant-reducers-7341691232b1
 const REDUX_PERSIST = {
   active: true,
-  reducerVersion: '0.2',
+  reducerVersion: '0.1',
   storeConfig: {
     key: 'root',
     storage: MMKVStoragePersistHelper,

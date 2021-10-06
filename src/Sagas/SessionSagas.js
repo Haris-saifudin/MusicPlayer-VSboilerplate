@@ -3,7 +3,7 @@ import { UpdatePlaylist } from '../Components/Music/MusicManager';
 // import {Reducers} from '../Redux/ResetRedux';
 
 export function ActionReset() {
-  // Reducers();
+  console.log("[reset]");
   NavigationServices.setRootAuth();
 }
 export function ActionNavigateToMain() {

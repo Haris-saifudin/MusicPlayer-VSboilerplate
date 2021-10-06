@@ -3,9 +3,19 @@ import {FlatList, View} from 'react-native';
 import {connect} from 'react-redux';
 import MusicActions, { MusicSelectors } from '../../Redux/MusicRedux';
 import SongItem from '../../Components/Music/SongItem';
+import {StopMusic} from '../../Components/Music/MusicManager'
+import TrackPlayer from 'react-native-track-player';
 class SongScreen extends PureComponent {
-
-
+  // componentWillUnmount() {
+  //   this.stopMusic();
+  //  }
+ 
+  stopMusic = () =>{
+    const {setVisibility} = this.props;
+    setVisibility();
+    TrackPlayer.stop();
+    console.log('Stop Music');
+  }
 
   render() {
     const {musicList} = this.props;

@@ -12,7 +12,6 @@ class SearchScreen extends PureComponent {
   componentDidMount(){
     const {setVisibility} = this.props;
     setVisibility();
-
   }
 
   render() {

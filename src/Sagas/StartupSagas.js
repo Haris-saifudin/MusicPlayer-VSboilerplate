@@ -16,6 +16,7 @@ import {connect, useSelector} from 'react-redux';
 
 export function* startup(action) {
   const status = yield select(SessionSelectors.getSessionStatus);
+  console.log("[startup]");
   if (status) {
     NavigationServices.setRootMain();
   } else {

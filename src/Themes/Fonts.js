@@ -63,7 +63,7 @@ const style = {
   description:{
     fontFamily: type.base,
     fontSize: size.input,
-    height: 24
+    // height: 24
   }
 };
 

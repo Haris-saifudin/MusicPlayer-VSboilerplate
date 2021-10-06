@@ -8,17 +8,14 @@
 
 import React, { Fragment, PureComponent } from 'react';
 import { StatusBar, View } from 'react-native';
-import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import REDUX_PERSIST from '../Config/ReduxPersist';
 import splashscreen from '../Modules/splashscreen';
-import StartupActions from '../Redux/SampleRedux';
-import { fcmService } from '../Services/FCMService';
-import messaging from '@react-native-firebase/messaging';
-import DownloadUpdateModal from '../Components/DownloadUpdateModal';
+import StartupActions from '../Redux/MusicRedux';
 
 class App extends PureComponent {
   componentDidMount() {
+    console.log(REDUX_PERSIST.active);
     if (!REDUX_PERSIST.active) {
       const { startup } = this.props;
       startup();
