@@ -11,6 +11,10 @@ module.exports = async function setup() {
     TrackPlayer.play();
   });
 
+  TrackPlayer.addEventListener(Event.RemoteStop, () => {
+    TrackPlayer.stop();
+  });
+
   TrackPlayer.addEventListener(Event.RemoteDuck, async e => {
     if (e.permanent === true) {
       TrackPlayer.stop();

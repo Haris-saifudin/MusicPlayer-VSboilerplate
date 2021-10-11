@@ -76,6 +76,7 @@ export const onSelectMusic = async(index) =>{
 }
 
 export const StopMusic = async(item) =>{
+  await TrackPlayer.reset();
   await TrackPlayer.stop();
 }
 

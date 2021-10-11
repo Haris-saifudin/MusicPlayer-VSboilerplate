@@ -26,7 +26,12 @@ class Search extends PureComponent {
     const {music, searchMusic} = this.props;
     this.searchQuery = text;
     music(false);
-    const debouncedSave = debounce(() => searchMusic(this.searchQuery), 1000);
+    
+    const debouncedSave = debounce(() => {
+      if(this.searchQuery !== null){
+        console.log(this.searchQuery);
+        searchMusic(this.searchQuery) ;
+      }}, 1000);
     debouncedSave();
   }
 
